@@ -11,38 +11,6 @@ single-letter codes, the first letter is prepended to the code to make up the
 next series). This function is wholly generic and works with arbitrary
 alphabets. Default alphabet is lowercase ASCII, `a`, `b` ... `z`.
 
-| input            | output                                                                                            |
-| :-----           | :-----                                                                                            |
-| `'*'`            | `{ star: '*', colstar: '*', rowstar: '*' }`                                                       |
-| `'**'`           | `{ colstar: '*', rowstar: '*', star: '*' }`                                                       |
-| `'a1'`           | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
-| `'-a1'`          | `{ colsign: '-',   colletters: 'a',   rowdigits: '1',   colnr: -1,   rownr: 1 }`                  |
-| `'a-1'`          | `{ colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: 1,   rownr: -1 }`                  |
-| `'-a-1'`         | `{ colsign: '-',   colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: -1,   rownr: -1 }` |
-| `'+a01'`         | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
-| `'a*'`           | `{ colletters: 'a', rowstar: '*', colnr: 1 }`                                                     |
-| `'+a*'`          | `{ colletters: 'a', rowstar: '*', colnr: 1 }`                                                     |
-| `'-a*'`          | `{ colsign: '-', colletters: 'a', rowstar: '*', colnr: -1 }`                                      |
-| `'*1'`           | `{ colstar: '*', rowdigits: '1', rownr: 1 }`                                                      |
-| `'*+12'`         | `{ colstar: '*', rowdigits: '12', rownr: 12 }`                                                    |
-| `'*+00012'`      | `{ colstar: '*', rowdigits: '12', rownr: 12 }`                                                    |
-| `'*-2'`          | `{ colstar: '*', rowsign: '-', rowdigits: '2', rownr: -2 }`                                       |
-| `'a+1'`          | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
-| `'+a+1'`         | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
-| `'+a-1'`         | `{ colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: 1,   rownr: -1 }`                  |
-| `'+abc-123'`     | `{ colletters: 'abc',   rowsign: '-',   rowdigits: '123',   colnr: 731,   rownr: -123 }`          |
-| `'+abc-0000123'` | `{ colletters: 'abc',   rowsign: '-',   rowdigits: '123',   colnr: 731,   rownr: -123 }`          |
-| `'z1'`           | `{ colletters: 'z', rowdigits: '1', colnr: 26, rownr: 1 }`                                        |
-| `'aa1'`          | `{ colletters: 'aa', rowdigits: '1', colnr: 27, rownr: 1 }`                                       |
-| `'ab1'`          | `{ colletters: 'ab', rowdigits: '1', colnr: 28, rownr: 1 }`                                       |
-| `'ac1'`          | `{ colletters: 'ac', rowdigits: '1', colnr: 29, rownr: 1 }`                                       |
-| `'ay1'`          | `{ colletters: 'ay', rowdigits: '1', colnr: 51, rownr: 1 }`                                       |
-| `'az1'`          | `{ colletters: 'az', rowdigits: '1', colnr: 52, rownr: 1 }`                                       |
-| `'ba1'`          | `{ colletters: 'ba', rowdigits: '1', colnr: 53, rownr: 1 }`                                       |
-| `'cv1'`          | `{ colletters: 'cv', rowdigits: '1', colnr: 100, rownr: 1 }`                                      |
-| `'all1'`         | `{ colletters: 'all', rowdigits: '1', colnr: 1000, rownr: 1 }`                                    |
-| `'whassupman1'`  | `{ colletters: 'whassupman',   rowdigits: '1',   colnr: 126563337975660,   rownr: 1 }`            |
-
 
 -------------------------
 
@@ -95,6 +63,42 @@ applicable. However,
 
 These rules are intended to make evaluation of parsing results as
 straightforward as possible.
+
+To make the above more digestible, here's what you'll get out when you put in the values
+shown on the left:
+
+
+| input            | output                                                                                            |
+| :-----           | :-----                                                                                            |
+| `'*'`            | `{ star: '*', colstar: '*', rowstar: '*' }`                                                       |
+| `'**'`           | `{ colstar: '*', rowstar: '*', star: '*' }`                                                       |
+| `'a1'`           | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
+| `'-a1'`          | `{ colsign: '-',   colletters: 'a',   rowdigits: '1',   colnr: -1,   rownr: 1 }`                  |
+| `'a-1'`          | `{ colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: 1,   rownr: -1 }`                  |
+| `'-a-1'`         | `{ colsign: '-',   colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: -1,   rownr: -1 }` |
+| `'+a01'`         | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
+| `'a*'`           | `{ colletters: 'a', rowstar: '*', colnr: 1 }`                                                     |
+| `'+a*'`          | `{ colletters: 'a', rowstar: '*', colnr: 1 }`                                                     |
+| `'-a*'`          | `{ colsign: '-', colletters: 'a', rowstar: '*', colnr: -1 }`                                      |
+| `'*1'`           | `{ colstar: '*', rowdigits: '1', rownr: 1 }`                                                      |
+| `'*+12'`         | `{ colstar: '*', rowdigits: '12', rownr: 12 }`                                                    |
+| `'*+00012'`      | `{ colstar: '*', rowdigits: '12', rownr: 12 }`                                                    |
+| `'*-2'`          | `{ colstar: '*', rowsign: '-', rowdigits: '2', rownr: -2 }`                                       |
+| `'a+1'`          | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
+| `'+a+1'`         | `{ colletters: 'a', rowdigits: '1', colnr: 1, rownr: 1 }`                                         |
+| `'+a-1'`         | `{ colletters: 'a',   rowsign: '-',   rowdigits: '1',   colnr: 1,   rownr: -1 }`                  |
+| `'+abc-123'`     | `{ colletters: 'abc',   rowsign: '-',   rowdigits: '123',   colnr: 731,   rownr: -123 }`          |
+| `'+abc-0000123'` | `{ colletters: 'abc',   rowsign: '-',   rowdigits: '123',   colnr: 731,   rownr: -123 }`          |
+| `'z1'`           | `{ colletters: 'z', rowdigits: '1', colnr: 26, rownr: 1 }`                                        |
+| `'aa1'`          | `{ colletters: 'aa', rowdigits: '1', colnr: 27, rownr: 1 }`                                       |
+| `'ab1'`          | `{ colletters: 'ab', rowdigits: '1', colnr: 28, rownr: 1 }`                                       |
+| `'ac1'`          | `{ colletters: 'ac', rowdigits: '1', colnr: 29, rownr: 1 }`                                       |
+| `'ay1'`          | `{ colletters: 'ay', rowdigits: '1', colnr: 51, rownr: 1 }`                                       |
+| `'az1'`          | `{ colletters: 'az', rowdigits: '1', colnr: 52, rownr: 1 }`                                       |
+| `'ba1'`          | `{ colletters: 'ba', rowdigits: '1', colnr: 53, rownr: 1 }`                                       |
+| `'cv1'`          | `{ colletters: 'cv', rowdigits: '1', colnr: 100, rownr: 1 }`                                      |
+| `'all1'`         | `{ colletters: 'all', rowdigits: '1', colnr: 1000, rownr: 1 }`                                    |
+| `'whassupman1'`  | `{ colletters: 'whassupman',   rowdigits: '1',   colnr: 126563337975660,   rownr: 1 }`            |
 
 -------------------------
 
