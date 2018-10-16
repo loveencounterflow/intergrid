@@ -14,3 +14,6 @@ lowercase ASCII, `a`, `b` ... `z`.
 **`INTERGRID.A1LETTERS.get_number = ( letters, alphabet = null ) ->`** The inverse of
 `INTERGRID.A1LETTERS.get_letters()`.
 
+
+![](https://github.com/loveencounterflow/intergrid/raw/master/artwork/INTERGRID.A1CELLS.settings.patterns.a1_lowercase.railroad.png)
+
