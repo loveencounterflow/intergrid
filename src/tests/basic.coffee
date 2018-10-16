@@ -230,6 +230,7 @@ INTERGRID                 = require '../..'
     ["***",null]
     ["+*1",null]
     ["-*1",null]
+    ["whassupman1",{ colletters: 'whassupman',  rowdigits: '1',  colnr: 126563337975660,  rownr: 1 }]
    ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
@@ -243,6 +244,7 @@ INTERGRID                 = require '../..'
         T.fail error.message
       continue
     # urge '77812', ( jr [ probe, result, ] )
+    echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -269,6 +271,7 @@ INTERGRID                 = require '../..'
     [{"colnr":53,"rownr":1},"ba1"]
     [{"colnr":100,"rownr":1},"cv1"]
     [{"colnr":1000,"rownr":1},"all1"]
+    [{"colnr":Number.MAX_SAFE_INTEGER,"rownr":53},"bktxhsoghkke53"]
     ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
