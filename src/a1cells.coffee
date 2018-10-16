@@ -56,6 +56,11 @@ A1LETTERS                 = require './a1letters'
     throw new Error "µ42330 expected a cellref like 'a1', '*', '*4' or 'c-1, got #{rpr cellref}"
   R = R.groups
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
+  if R.colstar? and R.rowstar?
+    R.star = '*'
+  else if R.star?
+    R.colstar = '*'
+    R.rowstar = '*'
   return R
 
 #-----------------------------------------------------------------------------------------------------------

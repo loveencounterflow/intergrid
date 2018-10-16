@@ -233,13 +233,19 @@ INTERGRID                 = require '../..'
 #-----------------------------------------------------------------------------------------------------------
 @[ "INTERGRID.A1CELLS.parse_cellref" ] = ( T, done ) ->
   probes_and_matchers = [
-    ["*",{"star":"*"}]
-    ["**",{"colstar":"*","rowstar":"*"}]
+    ["*",{"star":"*","colstar":"*","rowstar":"*"}]
+    ["**",{"star":"*","colstar":"*","rowstar":"*"}]
     ["a1",{"colletters":"a","rowdigits":"1"}]
     ["-a1",{"colsign":"-","colletters":"a","rowdigits":"1"}]
     ["a-1",{"colletters":"a","rowsign":"-","rowdigits":"1"}]
     ["-a-1",{"colsign":"-","colletters":"a","rowsign":"-","rowdigits":"1"}]
     ["+a1",{"colletters":"a","rowdigits":"1"}]
+    ["a*",{"colletters":"a","rowstar":"*"}]
+    ["+a*",{"colletters":"a","rowstar":"*"}]
+    ["-a*",{"colsign":"-","colletters":"a","rowstar":"*"}]
+    ["*1",{"colstar":"*","rowdigits":"1"}]
+    ["*+12",{"colstar":"*","rowdigits":"12"}]
+    ["*-2",{"colstar":"*","rowsign":"-","rowdigits":"2"}]
     ["a+1",{"colletters":"a","rowdigits":"1"}]
     ["+a+1",{"colletters":"a","rowdigits":"1"}]
     ["+a-1",{"colletters":"a","rowsign":"-","rowdigits":"1"}]
