@@ -50,10 +50,10 @@ A1LETTERS                 = require './a1letters'
   return { colnr, rownr, cellkey, letters, digits, }
 
 #-----------------------------------------------------------------------------------------------------------
-@parse_cellref = ( cellref ) ->
-  R = cellref.match @settings.patterns.a1_lowercase
+@parse_cellkey = ( cellkey ) ->
+  R = cellkey.match @settings.patterns.a1_lowercase
   unless R?
-    throw new Error "µ42330 expected a cellref like 'a1', '*', '*4' or 'c-1, got #{rpr cellref}"
+    throw new Error "µ42330 expected a cellkey like 'a1', '*', '*4' or 'c-1, got #{rpr cellkey}"
   R = R.groups
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
   if R.colstar? and R.rowstar?

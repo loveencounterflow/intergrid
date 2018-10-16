@@ -231,7 +231,7 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.parse_cellref" ] = ( T, done ) ->
+@[ "INTERGRID.A1CELLS.parse_cellkey" ] = ( T, done ) ->
   probes_and_matchers = [
     ["*",{"star":"*","colstar":"*","rowstar":"*"}]
     ["**",{"star":"*","colstar":"*","rowstar":"*"}]
@@ -258,9 +258,9 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result = INTERGRID.A1CELLS.parse_cellref probe
+      result = INTERGRID.A1CELLS.parse_cellkey probe
     catch error
-      if ( matcher is null ) and ( error.message.match /expected a cellref like 'a1', '\*', '\*4' or 'c-1, got '/ )?
+      if ( matcher is null ) and ( error.message.match /expected a cellkey like 'a1', '\*', '\*4' or 'c-1, got '/ )?
         urge '77812', ( jr [ probe, null, ] )
         T.ok true
       else
@@ -316,7 +316,7 @@ unless module.parent?
     "INTERGRID.A1LETTERS.get_number 1"
     "INTERGRID.A1LETTERS.get_number 2"
     "INTERGRID.A1CELLS cellref pattern"
-    "INTERGRID.A1CELLS.parse_cellref"
+    "INTERGRID.A1CELLS.parse_cellkey"
     # "INTERGRID.A1CELLS.get_cellref"
     # "INTERGRID.A1CELLS.get_cellkey"
     ]

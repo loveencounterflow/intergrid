@@ -16,11 +16,12 @@ inverse of `INTERGRID.A1LETTERS.get_letters()`.
 
 <!-- **`@get_cellref = ( cellkey ) ->`** Given a cellkey  -->
 
-**`INTERGRID.A1CELLS.parse_cellref = ( cellref ) ->`** Given a cellref like
+**`INTERGRID.A1CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
 `'a1'`, `'*'`, `'ac23'`, `b*`, `**` or similar, return a POD with two or more of
 the following attributes:
 
-* **`star`**—Set to `'*'` when both `colstar` and `rowstar` are set.
+* **`star`**—Set to `'*'` when the cellref is `'*'`, or when both `colstar` and
+  `rowstar` are set.
 * **`colstar`**—Set to `'*'` when the column position has a star, as in `'*23'`
   (meaning row `23`), and also when `star` is set.
 * **`colsign`**—Set to `'-'` when the column letter was preceded with a minus
