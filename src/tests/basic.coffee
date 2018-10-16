@@ -27,7 +27,7 @@ jr                        = JSON.stringify
 INTERGRID                 = require '../..'
 
 #-----------------------------------------------------------------------------------------------------------
-TAP.test "_letter_from_nr_and_alphabet 1", ( T ) ->
+TAP.test "INTERGRID.A1LETTERS.get_letters 1", ( T ) ->
   probes_and_matchers = [
     [1,"X"]
     [2,"Y"]
@@ -51,14 +51,14 @@ TAP.test "_letter_from_nr_and_alphabet 1", ( T ) ->
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID._letter_from_nr_and_alphabet probe, ['X','Y','Z']
+    result = INTERGRID.A1LETTERS.get_letters probe, ['X','Y','Z']
     # urge '36633', ( jr [ probe, result, ] )
     T.ok eq result, matcher
   #.........................................................................................................
   T.end()
 
 #-----------------------------------------------------------------------------------------------------------
-TAP.test "_letter_from_nr_and_alphabet 2", ( T ) ->
+TAP.test "INTERGRID.A1LETTERS.get_letters 2", ( T ) ->
   probes_and_matchers = [
     [1,"a"]
     [2,"b"]
@@ -82,23 +82,74 @@ TAP.test "_letter_from_nr_and_alphabet 2", ( T ) ->
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID._letter_from_nr_and_alphabet probe
+    result = INTERGRID.A1LETTERS.get_letters probe
     urge '36633', ( jr [ probe, result, ] )
     T.ok eq result, matcher
   #.........................................................................................................
   T.end()
 
 #-----------------------------------------------------------------------------------------------------------
-TAP.test "nr_from_ll", ( T ) ->
+TAP.test "INTERGRID.A1LETTERS.get_number 1", ( T ) ->
   probes_and_matchers = [
-    [ 'a', 1]
-    [ 'b', 2]
-    [ 'z', 26]
-    [ 'aa', 27]
+    ["X",1]
+    ["Y",2]
+    ["Z",3]
+    ["XX",4]
+    ["XY",5]
+    ["XZ",6]
+    ["YX",7]
+    ["YY",8]
+    ["YZ",9]
+    ["ZX",10]
+    ["YYY",26]
+    ["YYZ",27]
+    ["YZX",28]
+    ["YZY",29]
+    ["XYXZ",51]
+    ["XYYX",52]
+    ["XYYY",53]
+    ["ZXZX",100]
+    ["ZYZYZX",1000]
   ]
   #.........................................................................................................
-  T.ok eq 1, 1
+  for [ probe, matcher, ] in probes_and_matchers
+    result = INTERGRID.A1LETTERS.get_number probe, ['X','Y','Z']
+    urge '36633', ( jr [ probe, result, ] )
+    T.ok eq result, matcher
+  #.........................................................................................................
   T.end()
+
+#-----------------------------------------------------------------------------------------------------------
+TAP.test "INTERGRID.A1LETTERS.get_number 2", ( T ) ->
+  probes_and_matchers = [
+    ["a",1]
+    ["b",2]
+    ["c",3]
+    ["d",4]
+    ["e",5]
+    ["f",6]
+    ["g",7]
+    ["h",8]
+    ["i",9]
+    ["j",10]
+    ["z",26]
+    ["aa",27]
+    ["ab",28]
+    ["ac",29]
+    ["ay",51]
+    ["az",52]
+    ["ba",53]
+    ["cv",100]
+    ["all",1000]
+  ]
+  #.........................................................................................................
+  for [ probe, matcher, ] in probes_and_matchers
+    result = INTERGRID.A1LETTERS.get_number probe
+    urge '36633', ( jr [ probe, result, ] )
+    T.ok eq result, matcher
+  #.........................................................................................................
+  T.end()
+
 
 # #-----------------------------------------------------------------------------------------------------------
 # TAP.test "recognize_cell_format", ( T ) ->
