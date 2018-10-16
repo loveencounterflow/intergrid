@@ -16,5 +16,5 @@ urge                      = CND.get_logger 'urge',      badge
 echo                      = CND.echo.bind CND
 #...........................................................................................................
 jr                        = JSON.stringify
-@A1LETTERS                = require './a1letters'
-@A1CELLS                  = require './a1cells'
+@LETTERS                  = require './a1letters'
+@CELLS                    = require './a1cells'

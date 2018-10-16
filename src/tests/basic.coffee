@@ -38,7 +38,7 @@ INTERGRID                 = require '../..'
   test @, 'timeout': 30000
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1LETTERS.get_letters 1" ] = ( T, done ) ->
+@[ "INTERGRID.LETTERS.get_letters 1" ] = ( T, done ) ->
   probes_and_matchers = [
     [1,"X"]
     [2,"Y"]
@@ -62,14 +62,14 @@ INTERGRID                 = require '../..'
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID.A1LETTERS.get_letters probe, ['X','Y','Z']
+    result = INTERGRID.LETTERS.get_letters probe, ['X','Y','Z']
     # urge '36633', ( jr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1LETTERS.get_letters 2" ] = ( T, done ) ->
+@[ "INTERGRID.LETTERS.get_letters 2" ] = ( T, done ) ->
   probes_and_matchers = [
     [1,"a"]
     [2,"b"]
@@ -93,14 +93,14 @@ INTERGRID                 = require '../..'
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID.A1LETTERS.get_letters probe
+    result = INTERGRID.LETTERS.get_letters probe
     # urge '36633', ( jr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1LETTERS.get_number 1" ] = ( T, done ) ->
+@[ "INTERGRID.LETTERS.get_number 1" ] = ( T, done ) ->
   probes_and_matchers = [
     ["X",1]
     ["Y",2]
@@ -124,14 +124,14 @@ INTERGRID                 = require '../..'
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID.A1LETTERS.get_number probe, ['X','Y','Z']
+    result = INTERGRID.LETTERS.get_number probe, ['X','Y','Z']
     # urge '36633', ( jr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1LETTERS.get_number 2" ] = ( T, done ) ->
+@[ "INTERGRID.LETTERS.get_number 2" ] = ( T, done ) ->
   probes_and_matchers = [
     ["a",1]
     ["b",2]
@@ -155,14 +155,14 @@ INTERGRID                 = require '../..'
   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
-    result = INTERGRID.A1LETTERS.get_number probe
+    result = INTERGRID.LETTERS.get_number probe
     # urge '36633', ( jr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS cellref pattern" ] = ( T, done ) ->
+@[ "INTERGRID.CELLS cellref pattern" ] = ( T, done ) ->
   probes_and_matchers = [
     ["*",{"star":"*"}]
     ["**",{"colstar":"*","rowstar":"*"}]
@@ -180,10 +180,10 @@ INTERGRID                 = require '../..'
     ["-*1",null]
     ]
   #.........................................................................................................
-  debug '777855', INTERGRID.A1CELLS.settings.patterns.a1_lowercase
+  debug '777855', INTERGRID.CELLS.settings.patterns.a1_lowercase
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result = probe.match INTERGRID.A1CELLS.settings.patterns.a1_lowercase
+      result = probe.match INTERGRID.CELLS.settings.patterns.a1_lowercase
     catch error
       T.fail error.message
       continue
@@ -196,7 +196,7 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.parse_cellkey" ] = ( T, done ) ->
+@[ "INTERGRID.CELLS.parse_cellkey" ] = ( T, done ) ->
   probes_and_matchers = [
     ["*",{"star":"*","colstar":"*","rowstar":"*"}]
     ["**",{"colstar":"*","rowstar":"*","star":"*"}]
@@ -235,7 +235,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result = INTERGRID.A1CELLS.parse_cellkey probe
+      result = INTERGRID.CELLS.parse_cellkey probe
     catch error
       if ( matcher is null ) and ( error.message.match /expected a cellkey like 'a1', '\*', '\*4' or 'c-1, got '/ )?
         # urge '77812', ( jr [ probe, null, ] )
@@ -244,13 +244,13 @@ INTERGRID                 = require '../..'
         T.fail error.message
       continue
     # urge '77812', ( jr [ probe, result, ] )
-    echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
+    # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.get_cellkey 1" ] = ( T, done ) ->
+@[ "INTERGRID.CELLS.get_cellkey 1" ] = ( T, done ) ->
   probes_and_matchers = [
     [{"colnr":1,"rownr":1},"a1"]
     [{"colnr":2,"rownr":1},"b1"]
@@ -276,7 +276,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result = INTERGRID.A1CELLS.get_cellkey probe
+      result = INTERGRID.CELLS.get_cellkey probe
     catch error
       T.fail error.message
       continue
@@ -286,7 +286,7 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.get_cellkey 2" ] = ( T, done ) ->
+@[ "INTERGRID.CELLS.get_cellkey 2" ] = ( T, done ) ->
   probes_and_matchers = [
     ["a1","a1"]
     ["b1","b1"]
@@ -369,19 +369,19 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result_1 = INTERGRID.A1CELLS.get_cellkey INTERGRID.A1CELLS.parse_cellkey probe
+      result_1 = INTERGRID.CELLS.get_cellkey INTERGRID.CELLS.parse_cellkey probe
     catch error
       T.fail error.message
       continue
     # urge '77811', ( jr [ probe, result_1, ] )
     T.eq result_1, matcher
-    result_2 = INTERGRID.A1CELLS.normalize_cellkey probe
+    result_2 = INTERGRID.CELLS.normalize_cellkey probe
     T.eq result_2, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.get_cellkey 3" ] = ( T, done ) ->
+@[ "INTERGRID.CELLS.get_cellkey 3" ] = ( T, done ) ->
   probes_and_matchers = [
     [{},"*"]
     [{"colstar":"*"},"*"]
@@ -440,7 +440,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
-      result = INTERGRID.A1CELLS.get_cellkey probe
+      result = INTERGRID.CELLS.get_cellkey probe
     catch error
       T.fail "probe #{jr probe}: #{error.message}"
       continue
@@ -453,15 +453,15 @@ INTERGRID                 = require '../..'
 ############################################################################################################
 unless module.parent?
   include = [
-    "INTERGRID.A1LETTERS.get_letters 1"
-    "INTERGRID.A1LETTERS.get_letters 2"
-    "INTERGRID.A1LETTERS.get_number 1"
-    "INTERGRID.A1LETTERS.get_number 2"
-    "INTERGRID.A1CELLS cellref pattern"
-    "INTERGRID.A1CELLS.parse_cellkey"
-    "INTERGRID.A1CELLS.get_cellkey 1"
-    "INTERGRID.A1CELLS.get_cellkey 2"
-    "INTERGRID.A1CELLS.get_cellkey 3"
+    "INTERGRID.LETTERS.get_letters 1"
+    "INTERGRID.LETTERS.get_letters 2"
+    "INTERGRID.LETTERS.get_number 1"
+    "INTERGRID.LETTERS.get_number 2"
+    "INTERGRID.CELLS cellref pattern"
+    "INTERGRID.CELLS.parse_cellkey"
+    "INTERGRID.CELLS.get_cellkey 1"
+    "INTERGRID.CELLS.get_cellkey 2"
+    "INTERGRID.CELLS.get_cellkey 3"
     ]
   @_prune()
   @_main()

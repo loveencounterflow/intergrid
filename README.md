@@ -2,9 +2,22 @@
 
 # InterGrid
 
-#### `INTERGRID.A1LETTERS`
+## Installation
 
-**`INTERGRID.A1LETTERS.get_letters = ( nr, alphabet = null ) ->`** Given an
+```sh
+npm install intergrid
+```
+
+## Usage
+
+```js
+const IG = require( 'intergrid' );
+```
+
+
+#### IGLETTERS`
+
+**`IG.LETTERS.get_letters = ( nr, alphabet = null ) ->`** Given an
 integer above zero and an optional alphabet (a list of characters), return the
 integer written in the A1 notation format (where after reaching the realm of
 single-letter codes, the first letter is prepended to the code to make up the
@@ -14,12 +27,12 @@ alphabets. Default alphabet is lowercase ASCII, `a`, `b` ... `z`.
 
 -------------------------
 
-**`INTERGRID.A1LETTERS.get_number = ( letters, alphabet = null ) ->`** The
-inverse of `INTERGRID.A1LETTERS.get_letters()`.
+**`IG.LETTERS.get_number = ( letters, alphabet = null ) ->`** The
+inverse of `IG.LETTERS.get_letters()`.
 
 -------------------------
 
-**`INTERGRID.A1CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
+**`IG.CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
 `'a1'`, `'*'`, `'ac23'`, `b*`, `**` or similar, return a POD with two or more of
 the following attributes:
 
@@ -44,7 +57,7 @@ the following attributes:
 
 The sum total of allowed cellrefs is succinctly captured by this railroad diagram:
 
-![](https://github.com/loveencounterflow/intergrid/raw/master/artwork/INTERGRID.A1CELLS.settings.patterns.a1_lowercase.railroad.png)
+![](https://github.com/loveencounterflow/intergrid/raw/master/artwork/IG.CELLS.settings.patterns.a1_lowercase.railroad.png)
 
 In general, the respective attribute on the result is set to the text portion
 that corresponds to the position in question, and will be absent where not
@@ -102,15 +115,15 @@ shown on the left:
 
 -------------------------
 
-**`INTERGRID.A1CELLS.get_cellkey = ( cellref ) ->`** Given a cellref as a Plain
+**`IG.CELLS.get_cellkey = ( cellref ) ->`** Given a cellref as a Plain
 Old Dictionary that has (at least) the keys `cellnr` and `rownr` set to integer
 numbers (*not* digits), return the corresponding cellkey. The input must roughly
-conform to the rules laid out for `INTERGRID.A1CELLS.parse_cellkey`. If `colnr`
+conform to the rules laid out for `IG.CELLS.parse_cellkey`. If `colnr`
 and/or `rownr` are unset or set to `null` or `undefined` or `colstar` and / or
 `rowstar` are set to `'*'`, a star will be used in that position; when both
 `colnr` *and* `rownr` are missing a single star will be returned. In any case,
 `colsign`, `rowsign` and other attributes that are present in the return value
-of `INTERGRID.A1CELLS.parse_cellkey` will be silently ignored ATM (and not be
+of `IG.CELLS.parse_cellkey` will be silently ignored ATM (and not be
 checked for consistency).
 
 In short, this method will convert the following data structures to the values
@@ -148,9 +161,9 @@ shown on the right:
 
 -------------------------
 
-**`INTERGRID.A1CELLS.normalize_cellkey = ( cellkey ) ->`** Given a cellkey,
+**`IG.CELLS.normalize_cellkey = ( cellkey ) ->`** Given a cellkey,
 return the same written with leading zeroes and plus signs removed. This is
 identical to
-`INTERGRID.A1CELLS.get_cellkey(INTERGRID.A1CELLS.parse_cellkey(cellkey))`.
+`IG.CELLS.get_cellkey(IG.CELLS.parse_cellkey(cellkey))`.
 
 
