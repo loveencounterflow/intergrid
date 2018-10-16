@@ -17,3 +17,4 @@ echo                      = CND.echo.bind CND
 #...........................................................................................................
 jr                        = JSON.stringify
 @A1LETTERS                = require './a1letters'
+@A1CELLS                  = require './a1cells'
