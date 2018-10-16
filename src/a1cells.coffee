@@ -41,28 +41,33 @@ A1LETTERS                 = require './a1letters'
     # a1_uppercase:  /^([*]|(\+|-|)(?:[a-z]+))([*]|(\+|-|)(?:[0-9]+))/
 
 #-----------------------------------------------------------------------------------------------------------
-@get_cellref = ( cellkey ) ->
-  unless ( match = cellkey.match @settings.patterns.a1_lowercase )?
-    throw new Error "µ77363 expected A1 notation, got #{rpr cellkey}"
-  [ _, letters, digits, ] = match
-  rownr                   = parseInt digits, 10
-  colnr                   = A1LETTERS.get_number letters, A1LETTERS.settings.alphabets.lowercase
-  return { colnr, rownr, cellkey, letters, digits, }
-
-#-----------------------------------------------------------------------------------------------------------
 @parse_cellkey = ( cellkey ) ->
   R = cellkey.match @settings.patterns.a1_lowercase
+  #.........................................................................................................
   unless R?
-    throw new Error "µ42330 expected a cellkey like 'a1', '*', '*4' or 'c-1, got #{rpr cellkey}"
+    throw new Error "µ9297 expected a cellkey like 'a1', '*', '*4' or 'c-1, got #{rpr cellkey}"
+  #.........................................................................................................
   R = R.groups
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
+  #.........................................................................................................
   if R.colstar? and R.rowstar?
     R.star = '*'
+  #.........................................................................................................
   else if R.star?
     R.colstar = '*'
     R.rowstar = '*'
+  #.........................................................................................................
   if R.rowdigits?
     R.rowdigits = R.rowdigits.replace /^0*/, ''
+  #.........................................................................................................
+  if R.colletters?
+    R.colnr = A1LETTERS.get_number R.colletters, A1LETTERS.settings.alphabets.lowercase
+    R.colnr *= -1 if R.colsign?
+  #.........................................................................................................
+  if R.rowdigits?
+    R.rownr = parseInt R.rowdigits, 10
+    R.rownr *= -1 if R.rowsign?
+  #.........................................................................................................
   return R
 
 #-----------------------------------------------------------------------------------------------------------
