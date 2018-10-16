@@ -79,29 +79,32 @@ checked for consistency).
 In short, this method will convert the following data structures to the values
 shown on the right:
 
-| input                         | output |
-| :-----                        | :----- |
-| {}                            | "*"    |
-| { colstar:"*"}               | "*"    |
-| { rowstar:"*"}               | "*"    |
-| { colstar:"*", rowstar:"*"} | "*"    |
-| { star: "*"}                  | "*"    |
-| { colnr:10, rowstar:"*"}    | "j*"   |
-| { colnr:53, rowstar:"*"}    | "ba*"  |
-| { colnr:-10, rowstar:"*"}   | "-j*"  |
-| { colnr:-53, rowstar:"*"}   | "-ba*" |
-| { colnr:10}                  | "j*"   |
-| { colnr:53}                  | "ba*"  |
-| { colnr:-10}                 | "-j*"  |
-| { colnr:-53}                 | "-ba*" |
-| { rownr: 10}                  | "*10"  |
-| { rownr: 53}                  | "*53"  |
-| { rownr: -10}                 | "*-10" |
-| { rownr: -53}                 | "*-53" |
-| { rownr: 10,colstar:"*"}    | "*10"  |
-| { rownr: 53,colstar:"*"}    | "*53"  |
-| { rownr: -10,colstar:"*"}   | "*-10" |
-| { rownr: -53,colstar:"*"}   | "*-53" |
+| input                              | output   |
+| :-----                             | :-----   |
+| `{ colnr: 10, rownr: 1, }`         | `'j1'`   |
+| `{ colnr: 26, rownr: 1, }`         | `'z1'`   |
+| `{ colnr: 27, rownr: 1, }`         | `'aa1'`  |
+| `{}`                               | `'*'`    |
+| `{ colstar:  '*', }`               | `'*'`    |
+| `{ rowstar:  '*', }`               | `'*'`    |
+| `{ colstar:  '*', rowstar: '*', }` | `'*'`    |
+| `{ star:     '*', }`               | `'*'`    |
+| `{ colnr: 10,  rowstar: '*', }`    | `'j*'`   |
+| `{ colnr: 53,  rowstar: '*', }`    | `'ba*'`  |
+| `{ colnr: -10, rowstar: '*', }`    | `'-j*'`  |
+| `{ colnr: -53, rowstar: '*', }`    | `'-ba*'` |
+| `{ colnr: 10, }`                   | `'j*'`   |
+| `{ colnr: 53, }`                   | `'ba*'`  |
+| `{ colnr: -10, }`                  | `'-j*'`  |
+| `{ colnr: -53, }`                  | `'-ba*'` |
+| `{ rownr: 10, }`                   | `'*10'`  |
+| `{ rownr: 53, }`                   | `'*53'`  |
+| `{ rownr: -10, }`                  | `'*-10'` |
+| `{ rownr: -53, }`                  | `'*-53'` |
+| `{ colstar: '*', rownr: 10, }`     | `'*10'`  |
+| `{ colstar: '*', rownr: 53, }`     | `'*53'`  |
+| `{ colstar: '*', rownr: -10, }`    | `'*-10'` |
+| `{ colstar: '*', rownr: -53, }`    | `'*-53'` |
 
 
 
