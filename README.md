@@ -15,22 +15,24 @@ const IG = require( 'intergrid' );
 ```
 
 
-#### IGLETTERS`
+#### Module `IG.LETTERS`
 
-**`IG.LETTERS.get_letters = ( nr, alphabet = null ) ->`** Given an
-integer above zero and an optional alphabet (a list of characters), return the
-integer written in the A1 notation format (where after reaching the realm of
-single-letter codes, the first letter is prepended to the code to make up the
-next series). This function is wholly generic and works with arbitrary
-alphabets. Default alphabet is lowercase ASCII, `a`, `b` ... `z`.
+**`IG.LETTERS.get_letters = ( nr, alphabet = null ) ->`** Given an integer above
+zero and an optional alphabet (a list of characters), return the integer written
+in the A1 notation format (where after reaching the realm of single-letter
+codes, the first letter is prepended to the code to make up the next series).
+This function is wholly generic and works with arbitrary alphabets. Default
+alphabet is lowercase ASCII, `a`, `b` ... `z`.
 
+Note that although the rest of InterGrid supports negative references to columns
+and rows, methods `IG.LETTERS` reject negative values.
 
 -------------------------
 
 **`IG.LETTERS.get_number = ( letters, alphabet = null ) ->`** The
 inverse of `IG.LETTERS.get_letters()`.
 
--------------------------
+#### Module `IG.CELLS`
 
 **`IG.CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
 `'a1'`, `'*'`, `'ac23'`, `b*`, `**` or similar, return a POD with two or more of
@@ -165,5 +167,11 @@ shown on the right:
 return the same written with leading zeroes and plus signs removed. This is
 identical to
 `IG.CELLS.get_cellkey(IG.CELLS.parse_cellkey(cellkey))`.
+
+# Disclaimer
+
+> This software is a non-profit effort and free to use for anyone. It is not in
+> any way associated with any of the many firms of the same name that a [web
+> search](https://duckduckgo.com/?q=InterGrid&t=lm&ia=web) reveals.
 
 
