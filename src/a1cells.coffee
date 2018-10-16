@@ -61,6 +61,8 @@ A1LETTERS                 = require './a1letters'
   else if R.star?
     R.colstar = '*'
     R.rowstar = '*'
+  if R.rowdigits?
+    R.rowdigits = R.rowdigits.replace /^0*/, ''
   return R
 
 #-----------------------------------------------------------------------------------------------------------
