@@ -1,0 +1,295 @@
+<svg class="railroad-diagram" width="944" height="282" viewBox="0 0 944 282">
+<style>
+  svg, * {
+      background-color: hsl(30,20%,95%);
+  }
+  path {
+      stroke-width: 3;
+      stroke: black;
+      fill: transparent;
+  }
+  text {
+      font: bold 14px "Iosevka Slab";
+      text-anchor: middle;
+  }
+  text.diagram-text {
+      font: bold 14px "Iosevka Slab";
+      font-size: 12px;
+  }
+  text.diagram-arrow {
+      font: bold 14px "Iosevka Slab";
+      font-size: 16px;
+  }
+  text.label {
+      text-anchor: start;
+  }
+  text.comment {
+      font: italic 12px "Iosevka Slab";
+  }
+  g.non-terminal text {
+      font: italic 12px "Iosevka Slab";
+      /*font-style: italic;*/
+  }
+  rect {
+      stroke-width: 3;
+      stroke: black;
+      fill: hsl(120,100%,90%);
+  }
+  path.diagram-text {
+      stroke-width: 3;
+      stroke: black;
+      fill: white;
+      cursor: help;
+  }
+  g.diagram-text:hover path.diagram-text {
+      fill: #eee;
+  }
+
+  </style>
+<g transform="translate(.5 .5)">
+<path d="M 20 31 v 20 m 10 -20 v 20 m -10 -10 h 20.5"></path>
+<g>
+<path d="M40 41h0"></path>
+<path d="M903 41h0"></path>
+<path d="M40 41h10"></path>
+<g title="Beginning of string" class="zero-width-assertion">
+<path d="M50 41h0"></path>
+<path d="M102 41h0"></path>
+<rect x="50" y="30" width="52" height="22"></rect>
+<text x="76" y="45">START</text>
+</g>
+<path d="M102 41h10"></path>
+<g>
+<path d="M112 41h0"></path>
+<path d="M847 41h0"></path>
+<path d="M112 41h20"></path>
+<g class="capture-group group">
+<path d="M132 41h295.5"></path>
+<path d="M531.5 41h295.5"></path>
+<rect x="427.5" y="20" width="104" height="62" rx="5" ry="5"></rect>
+<g class="literal">
+<path d="M427.5 41h37.5"></path>
+<path d="M494 41h37.5"></path>
+<rect x="465" y="30" width="29" height="22" rx="10" ry="10"></rect>
+<text x="479.5" y="45">*</text>
+</g>
+<g class="caption">
+<path d="M422 71h0"></path>
+<path d="M537 71h0"></path>
+<text x="479.5" y="76">capture 1 (star)</text>
+</g>
+</g>
+<path d="M827 41h20"></path>
+<path d="M112 41a10 10 0 0 1 10 10v50a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M132 111h0"></path>
+<path d="M827 111h0"></path>
+<g>
+<path d="M132 111h0"></path>
+<path d="M483 111h0"></path>
+<path d="M132 111h20"></path>
+<g class="capture-group group">
+<path d="M152 111h93"></path>
+<path d="M370 111h93"></path>
+<rect x="245" y="90" width="125" height="62" rx="5" ry="5"></rect>
+<g class="literal">
+<path d="M245 111h48"></path>
+<path d="M322 111h48"></path>
+<rect x="293" y="100" width="29" height="22" rx="10" ry="10"></rect>
+<text x="307.5" y="115">*</text>
+</g>
+<g class="caption">
+<path d="M242 141h0"></path>
+<path d="M373 141h0"></path>
+<text x="307.5" y="146">capture 2 (colstar)</text>
+</g>
+</g>
+<path d="M463 111h20"></path>
+<path d="M132 111a10 10 0 0 1 10 10v50a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M152 181h0"></path>
+<path d="M463 181h0"></path>
+<path d="M152 181h10"></path>
+<g class="capture-group group">
+<path d="M162 181h0"></path>
+<path d="M287 181h0"></path>
+<rect x="162" y="160" width="125" height="102" rx="5" ry="5"></rect>
+<g>
+<path d="M162 181h28"></path>
+<path d="M259 181h28"></path>
+<path d="M190 181h20"></path>
+<g class="literal">
+<path d="M210 181h0"></path>
+<path d="M239 181h0"></path>
+<rect x="210" y="170" width="29" height="22" rx="10" ry="10"></rect>
+<text x="224.5" y="185">+</text>
+</g>
+<path d="M239 181h20"></path>
+<path d="M190 181a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path>
+<g class="literal">
+<path d="M210 211h0"></path>
+<path d="M239 211h0"></path>
+<rect x="210" y="200" width="29" height="22" rx="10" ry="10"></rect>
+<text x="224.5" y="215">-</text>
+</g>
+<path d="M239 211a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path>
+<path d="M190 181a10 10 0 0 1 10 10v29a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M210 230h14.5"></path>
+<path d="M224.5 230h14.5"></path>
+</g>
+<path d="M239 230a10 10 0 0 0 10 -10v-29a10 10 0 0 1 10 -10"></path>
+</g>
+<g class="caption">
+<path d="M160 251h0"></path>
+<path d="M289 251h0"></path>
+<text x="224.5" y="256">capture 3 (colsign)</text>
+</g>
+</g>
+<path d="M287 181h10"></path>
+<path d="M297 181h10"></path>
+<g class="capture-group group">
+<path d="M307 181h0"></path>
+<path d="M453 181h0"></path>
+<rect x="307" y="160" width="146" height="92" rx="5" ry="5"></rect>
+<g>
+<path d="M307 181h25"></path>
+<path d="M428 181h25"></path>
+<path d="M332 181h10"></path>
+<g class="literal">
+<path d="M342 181h17.5"></path>
+<path d="M400.5 181h17.5"></path>
+<rect x="359.5" y="170" width="41" height="22" rx="10" ry="10"></rect>
+<text x="380" y="185">a-z</text>
+</g>
+<path d="M418 181h10"></path>
+<path d="M342 181a10 10 0 0 0 -10 10v10a10 10 0 0 0 10 10"></path>
+<g title="repeat at least one time, longest possible match" class="quantified greedy">
+<path d="M342 211h0"></path>
+<path d="M418 211h0"></path>
+<text x="380" y="216">+ (greedy)</text>
+</g>
+<path d="M418 211a10 10 0 0 0 10 -10v-10a10 10 0 0 0 -10 -10"></path>
+</g>
+<g class="caption">
+<path d="M306.5 241h0"></path>
+<path d="M453.5 241h0"></path>
+<text x="380" y="246">capture 4 (colletters)</text>
+</g>
+</g>
+<path d="M453 181h10"></path>
+</g>
+<path d="M463 181a10 10 0 0 0 10 -10v-50a10 10 0 0 1 10 -10"></path>
+</g>
+<g>
+<path d="M483 111h0"></path>
+<path d="M827 111h0"></path>
+<path d="M483 111h20"></path>
+<g class="capture-group group">
+<path d="M503 111h89.5"></path>
+<path d="M717.5 111h89.5"></path>
+<rect x="592.5" y="90" width="125" height="62" rx="5" ry="5"></rect>
+<g class="literal">
+<path d="M592.5 111h48"></path>
+<path d="M669.5 111h48"></path>
+<rect x="640.5" y="100" width="29" height="22" rx="10" ry="10"></rect>
+<text x="655" y="115">*</text>
+</g>
+<g class="caption">
+<path d="M588.5 141h0"></path>
+<path d="M721.5 141h0"></path>
+<text x="655" y="146">capture 5 (rowstar)</text>
+</g>
+</g>
+<path d="M807 111h20"></path>
+<path d="M483 111a10 10 0 0 1 10 10v50a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M503 181h0"></path>
+<path d="M807 181h0"></path>
+<path d="M503 181h10"></path>
+<g class="capture-group group">
+<path d="M513 181h0"></path>
+<path d="M638 181h0"></path>
+<rect x="513" y="160" width="125" height="102" rx="5" ry="5"></rect>
+<g>
+<path d="M513 181h28"></path>
+<path d="M610 181h28"></path>
+<path d="M541 181h20"></path>
+<g class="literal">
+<path d="M561 181h0"></path>
+<path d="M590 181h0"></path>
+<rect x="561" y="170" width="29" height="22" rx="10" ry="10"></rect>
+<text x="575.5" y="185">+</text>
+</g>
+<path d="M590 181h20"></path>
+<path d="M541 181a10 10 0 0 1 10 10v10a10 10 0 0 0 10 10"></path>
+<g class="literal">
+<path d="M561 211h0"></path>
+<path d="M590 211h0"></path>
+<rect x="561" y="200" width="29" height="22" rx="10" ry="10"></rect>
+<text x="575.5" y="215">-</text>
+</g>
+<path d="M590 211a10 10 0 0 0 10 -10v-10a10 10 0 0 1 10 -10"></path>
+<path d="M541 181a10 10 0 0 1 10 10v29a10 10 0 0 0 10 10"></path>
+<g>
+<path d="M561 230h14.5"></path>
+<path d="M575.5 230h14.5"></path>
+</g>
+<path d="M590 230a10 10 0 0 0 10 -10v-29a10 10 0 0 1 10 -10"></path>
+</g>
+<g class="caption">
+<path d="M510 251h0"></path>
+<path d="M641 251h0"></path>
+<text x="575.5" y="256">capture 6 (rowsign)</text>
+</g>
+</g>
+<path d="M638 181h10"></path>
+<path d="M648 181h10"></path>
+<g class="capture-group group">
+<path d="M658 181h0"></path>
+<path d="M797 181h0"></path>
+<rect x="658" y="160" width="139" height="92" rx="5" ry="5"></rect>
+<g>
+<path d="M658 181h21.5"></path>
+<path d="M775.5 181h21.5"></path>
+<path d="M679.5 181h10"></path>
+<g class="literal">
+<path d="M689.5 181h14.5"></path>
+<path d="M751 181h14.5"></path>
+<rect x="704" y="170" width="47" height="22" rx="10" ry="10"></rect>
+<text x="727.5" y="185">0-9</text>
+</g>
+<path d="M765.5 181h10"></path>
+<path d="M689.5 181a10 10 0 0 0 -10 10v10a10 10 0 0 0 10 10"></path>
+<g title="repeat at least one time, longest possible match" class="quantified greedy">
+<path d="M689.5 211h0"></path>
+<path d="M765.5 211h0"></path>
+<text x="727.5" y="216">+ (greedy)</text>
+</g>
+<path d="M765.5 211a10 10 0 0 0 10 -10v-10a10 10 0 0 0 -10 -10"></path>
+</g>
+<g class="caption">
+<path d="M657 241h0"></path>
+<path d="M798 241h0"></path>
+<text x="727.5" y="246">capture 7 (rowdigits)</text>
+</g>
+</g>
+<path d="M797 181h10"></path>
+</g>
+<path d="M807 181a10 10 0 0 0 10 -10v-50a10 10 0 0 1 10 -10"></path>
+</g>
+</g>
+<path d="M827 111a10 10 0 0 0 10 -10v-50a10 10 0 0 1 10 -10"></path>
+</g>
+<path d="M847 41h10"></path>
+<g title="End of string" class="zero-width-assertion">
+<path d="M857 41h0"></path>
+<path d="M893 41h0"></path>
+<rect x="857" y="30" width="36" height="22"></rect>
+<text x="875" y="45">END</text>
+</g>
+<path d="M893 41h10"></path>
+</g>
+<path d="M 903 41 h 20 m -10 -10 v 20 m 10 -20 v 20"></path>
+</g>
+</svg>
