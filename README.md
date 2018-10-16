@@ -14,8 +14,11 @@ npm install intergrid
 const IG = require( 'intergrid' );
 ```
 
+## API
 
-#### Module `IG.LETTERS`
+-------------------------
+
+### Module `IG.LETTERS`
 
 **`IG.LETTERS.get_letters = ( nr, alphabet = null ) ->`** Given an integer above
 zero and an optional alphabet (a list of characters), return the integer written
@@ -32,7 +35,9 @@ and rows, methods `IG.LETTERS` reject negative values.
 **`IG.LETTERS.get_number = ( letters, alphabet = null ) ->`** The
 inverse of `IG.LETTERS.get_letters()`.
 
-#### Module `IG.CELLS`
+-------------------------
+
+### Module `IG.CELLS`
 
 **`IG.CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
 `'a1'`, `'*'`, `'ac23'`, `b*`, `**` or similar, return a POD with two or more of
