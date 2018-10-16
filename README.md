@@ -41,9 +41,18 @@ The sum total of allowed cellrefs is succinctly captured by this railroad diagra
 
 In general, the respective attribute on the result is set to the text portion
 that corresponds to the position in question, and will be absent where not
-applicable. However, plus signs as in `'+a3'`, `'a+3'`, `'+a+3'` are silently
-ignored since it is always redundant; therefore, if either `result.colsign` or
-`result.rowsign` exist, that the colum or row has been given with a minus sign.
-Further, `'*'` and `'**'` are identical and always have all of `star`, `colstar`
-and `rowstar` set (always to `'*'`). These rules are intended to make evaluation
-of parsing results as straightforward as possible.
+applicable. However,
+
+* plus signs as in `'+a3'`, `'a+3'`, `'+a+3'` are silently ignored since they
+  are always redundant; therefore, if either `result.colsign` or
+  `result.rowsign` exist, that the colum or row has been given with a minus
+  sign.
+
+* `'*'` and `'**'` are identical and always have all of `star`, `colstar` and
+  `rowstar` set (always to `'*'`).
+
+* Leading `0`s in `rowdigits` are always trimmed, so both `'a12'` and `'a012'`
+  will set `rowdigits` to `'12'`.
+
+These rules are intended to make evaluation of parsing results as
+straightforward as possible.
