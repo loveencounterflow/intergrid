@@ -20,13 +20,10 @@ jr                        = JSON.stringify
 #-----------------------------------------------------------------------------------------------------------
 @settings =
   alphabets:
-    ascii_lowercase:  [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ],
-    ascii_uppercase:  [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ],
-  patterns:
-    lls:  /^[a-z]+$/
-    uls:  /^[A-Z]+$/
+    lowercase:  [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ],
+    uppercase:  [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ],
 
 ###
 thx to https://stackoverflow.com/a/23862223/7568091
@@ -59,7 +56,7 @@ def col_to_num(col_str):
   is prepended to the code to make up the next series). ###
   unless ( nr > 0 ) and ( nr is Math.floor nr )
     throw new Error "µ42347 expected positive integer, got #{rpr nr}"
-  alphabet ?= @settings.alphabets.ascii_lowercase
+  alphabet ?= @settings.alphabets.lowercase
   lcount    = alphabet.length
   R         = ''
   while nr > 0
@@ -70,7 +67,7 @@ def col_to_num(col_str):
 
 #-----------------------------------------------------------------------------------------------------------
 @get_number = ( letters, alphabet = null ) ->
-  alphabet ?= @settings.alphabets.ascii_lowercase
+  alphabet ?= @settings.alphabets.lowercase
   lcount    = alphabet.length
   expn = 0
   R = 0
