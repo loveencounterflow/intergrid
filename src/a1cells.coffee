@@ -72,10 +72,58 @@ A1LETTERS                 = require './a1letters'
 
 #-----------------------------------------------------------------------------------------------------------
 @get_cellkey = ( cellref ) ->
-  { colnr, rownr, } = cellref
-  unless colnr? and ( colnr > 0 ) and ( colnr = Math.floor colnr )
-    throw new Error "µ42330 expected positive integer for colnr, got #{rpr colnr}"
-  unless rownr? and ( rownr > 0 ) and ( rownr = Math.floor rownr )
-    throw new Error "µ42330 expected positive integer for rownr, got #{rpr rownr}"
-  letters = A1LETTERS.get_letters rownr, A1LETTERS.settings.alphabets.lowercase
-  return "#{letters}#{rownr}"
+  { colnr, rownr, colstar, rowstar, star, } = cellref
+  colletters                                = null
+  colsign                                   = ''
+  #.........................................................................................................
+  if star?
+    unless star is '*'
+      throw new Error "µ5434 expected '*' for star, got #{rpr star}"
+    if colnr? or rownr?
+      throw new Error "µ8206 illegal to set colnr or rownr with star, got #{rpr cellref}"
+    return '*'
+  #.........................................................................................................
+  if colstar?
+    unless colstar is '*'
+      throw new Error "µ6338 expected '*' for colstar, got #{rpr colstar}"
+    if colnr?
+      throw new Error "µ4974 illegal to set colnr with colstar, got #{rpr cellref}"
+    colletters = '*'
+  #.........................................................................................................
+  else if rowstar?
+    unless rowstar is '*'
+      throw new Error "µ2116 expected '*' for rowstar, got #{rpr rowstar}"
+    if rownr?
+      throw new Error "µ1071 illegal to set rownr with rowstar, got #{rpr cellref}"
+    rownr = '*'
+  #.........................................................................................................
+  else
+    #.......................................................................................................
+    if colnr?
+      unless ( colnr = Math.floor colnr )
+        throw new Error "µ1849 expected integer for colnr, got #{rpr colnr}"
+    else
+      colletters = '*'
+    #.......................................................................................................
+    if rownr?
+      unless ( rownr = Math.floor rownr )
+        throw new Error "µ9949 expected integer for rownr, got #{rpr rownr}"
+    else
+      rownr = '*'
+  #.........................................................................................................
+  unless colletters?
+    if colnr?
+      colsign     = if colnr < 0 then '-' else ''
+      colletters  = A1LETTERS.get_letters ( Math.abs colnr ), A1LETTERS.settings.alphabets.lowercase
+    else
+      colletters = '*'
+  #.........................................................................................................
+  rownr = '*' unless rownr?
+  return '*' if colletters is '*' and rownr is '*'
+  return "#{colsign}#{colletters}#{rownr}"
+
+#-----------------------------------------------------------------------------------------------------------
+@normalize_cellkey = ( cellkey ) -> @get_cellkey @parse_cellkey cellkey
+
+
+
