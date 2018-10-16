@@ -11,10 +11,12 @@ single-letter codes, the first letter is prepended to the code to make up the
 next series). This function is wholly generic and works with arbitrary
 alphabets. Default alphabet is lowercase ASCII, `a`, `b` ... `z`.
 
+-------------------------
+
 **`INTERGRID.A1LETTERS.get_number = ( letters, alphabet = null ) ->`** The
 inverse of `INTERGRID.A1LETTERS.get_letters()`.
 
-<!-- **`@get_cellref = ( cellkey ) ->`** Given a cellkey  -->
+-------------------------
 
 **`INTERGRID.A1CELLS.parse_cellkey = ( cellkey ) ->`** Given a cellref like
 `'a1'`, `'*'`, `'ac23'`, `b*`, `**` or similar, return a POD with two or more of
@@ -34,6 +36,10 @@ the following attributes:
   An optional `'+'` in that position will be silently ignored.
 * **`rowdigits`**—Set to the sequence of digits that identify the row of the
   cell(s). Missing if `colstar` is set.
+* **`cellnr`**—Set to the numerical value of the referenced cell, starting with
+  1 when `cellletters` is set.
+* **`rownr`**—Set to the numerical value of the referenced row, starting with 1
+  when `rowdigits` is set.
 
 The sum total of allowed cellrefs is succinctly captured by this railroad diagram:
 
@@ -56,3 +62,54 @@ applicable. However,
 
 These rules are intended to make evaluation of parsing results as
 straightforward as possible.
+
+-------------------------
+
+**`INTERGRID.A1CELLS.get_cellkey = ( cellref ) ->`** Given a cellref as a Plain
+Old Dictionary that has (at least) the keys `cellnr` and `rownr` set to integer
+numbers (*not* digits), return the corresponding cellkey. The input must roughly
+conform to the rules laid out for `INTERGRID.A1CELLS.parse_cellkey`. If `colnr`
+and/or `rownr` are unset or set to `null` or `undefined` or `colstar` and / or
+`rowstar` are set to `'*'`, a star will be used in that position; when both
+`colnr` *and* `rownr` are missing a single star will be returned. In any case,
+`colsign`, `rowsign` and other attributes that are present in the return value
+of `INTERGRID.A1CELLS.parse_cellkey` will be silently ignored ATM (and not be
+checked for consistency).
+
+In short, this method will convert the following data structures to the values
+shown on the right:
+
+| input                         | output |
+| :-----                        | :----- |
+| {}                            | "*"    |
+| { colstar:"*"}               | "*"    |
+| { rowstar:"*"}               | "*"    |
+| { colstar:"*", rowstar:"*"} | "*"    |
+| { star: "*"}                  | "*"    |
+| { colnr:10, rowstar:"*"}    | "j*"   |
+| { colnr:53, rowstar:"*"}    | "ba*"  |
+| { colnr:-10, rowstar:"*"}   | "-j*"  |
+| { colnr:-53, rowstar:"*"}   | "-ba*" |
+| { colnr:10}                  | "j*"   |
+| { colnr:53}                  | "ba*"  |
+| { colnr:-10}                 | "-j*"  |
+| { colnr:-53}                 | "-ba*" |
+| { rownr: 10}                  | "*10"  |
+| { rownr: 53}                  | "*53"  |
+| { rownr: -10}                 | "*-10" |
+| { rownr: -53}                 | "*-53" |
+| { rownr: 10,colstar:"*"}    | "*10"  |
+| { rownr: 53,colstar:"*"}    | "*53"  |
+| { rownr: -10,colstar:"*"}   | "*-10" |
+| { rownr: -53,colstar:"*"}   | "*-53" |
+
+
+
+-------------------------
+
+**`INTERGRID.A1CELLS.normalize_cellkey = ( cellkey ) ->`** Given a cellkey,
+return the same written with leading zeroes and plus signs removed. This is
+identical to
+`INTERGRID.A1CELLS.get_cellkey(INTERGRID.A1CELLS.parse_cellkey(cellkey))`.
+
+
