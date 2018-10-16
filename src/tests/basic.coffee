@@ -162,41 +162,6 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.get_cellref" ] = ( T, done ) ->
-  probes_and_matchers = [
-    ["a1",{"rownr":1,"colnr":1,"cellkey":"a1","letters":"a","digits":"1"}]
-    ["b1",{"rownr":1,"colnr":2,"cellkey":"b1","letters":"b","digits":"1"}]
-    ["c1",{"rownr":1,"colnr":3,"cellkey":"c1","letters":"c","digits":"1"}]
-    ["d1",{"rownr":1,"colnr":4,"cellkey":"d1","letters":"d","digits":"1"}]
-    ["e1",{"rownr":1,"colnr":5,"cellkey":"e1","letters":"e","digits":"1"}]
-    ["f1",{"rownr":1,"colnr":6,"cellkey":"f1","letters":"f","digits":"1"}]
-    ["g1",{"rownr":1,"colnr":7,"cellkey":"g1","letters":"g","digits":"1"}]
-    ["h1",{"rownr":1,"colnr":8,"cellkey":"h1","letters":"h","digits":"1"}]
-    ["i1",{"rownr":1,"colnr":9,"cellkey":"i1","letters":"i","digits":"1"}]
-    ["j1",{"rownr":1,"colnr":10,"cellkey":"j1","letters":"j","digits":"1"}]
-    ["z1",{"rownr":1,"colnr":26,"cellkey":"z1","letters":"z","digits":"1"}]
-    ["aa1",{"rownr":1,"colnr":27,"cellkey":"aa1","letters":"aa","digits":"1"}]
-    ["ab1",{"rownr":1,"colnr":28,"cellkey":"ab1","letters":"ab","digits":"1"}]
-    ["ac1",{"rownr":1,"colnr":29,"cellkey":"ac1","letters":"ac","digits":"1"}]
-    ["ay1",{"rownr":1,"colnr":51,"cellkey":"ay1","letters":"ay","digits":"1"}]
-    ["az1",{"rownr":1,"colnr":52,"cellkey":"az1","letters":"az","digits":"1"}]
-    ["ba1",{"rownr":1,"colnr":53,"cellkey":"ba1","letters":"ba","digits":"1"}]
-    ["cv1",{"rownr":1,"colnr":100,"cellkey":"cv1","letters":"cv","digits":"1"}]
-    ["all1",{"rownr":1,"colnr":1000,"cellkey":"all1","letters":"all","digits":"1"}]
-    ]
-  #.........................................................................................................
-  for [ probe, matcher, ] in probes_and_matchers
-    try
-      result = INTERGRID.A1CELLS.get_cellref probe
-    catch error
-      T.fail error.message
-      continue
-    # urge '77811', ( jr [ probe, result, ] )
-    T.eq result, matcher
-  #.........................................................................................................
-  done()
-
-#-----------------------------------------------------------------------------------------------------------
 @[ "INTERGRID.A1CELLS cellref pattern" ] = ( T, done ) ->
   probes_and_matchers = [
     ["*",{"star":"*"}]
@@ -234,67 +199,76 @@ INTERGRID                 = require '../..'
 @[ "INTERGRID.A1CELLS.parse_cellkey" ] = ( T, done ) ->
   probes_and_matchers = [
     ["*",{"star":"*","colstar":"*","rowstar":"*"}]
-    ["**",{"star":"*","colstar":"*","rowstar":"*"}]
-    ["a1",{"colletters":"a","rowdigits":"1"}]
-    ["-a1",{"colsign":"-","colletters":"a","rowdigits":"1"}]
-    ["a-1",{"colletters":"a","rowsign":"-","rowdigits":"1"}]
-    ["-a-1",{"colsign":"-","colletters":"a","rowsign":"-","rowdigits":"1"}]
-    ["+a01",{"colletters":"a","rowdigits":"1"}]
-    ["a*",{"colletters":"a","rowstar":"*"}]
-    ["+a*",{"colletters":"a","rowstar":"*"}]
-    ["-a*",{"colsign":"-","colletters":"a","rowstar":"*"}]
-    ["*1",{"colstar":"*","rowdigits":"1"}]
-    ["*+12",{"colstar":"*","rowdigits":"12"}]
-    ["*+00012",{"colstar":"*","rowdigits":"12"}]
-    ["*-2",{"colstar":"*","rowsign":"-","rowdigits":"2"}]
-    ["a+1",{"colletters":"a","rowdigits":"1"}]
-    ["+a+1",{"colletters":"a","rowdigits":"1"}]
-    ["+a-1",{"colletters":"a","rowsign":"-","rowdigits":"1"}]
-    ["+abc-123",{"colletters":"abc","rowsign":"-","rowdigits":"123"}]
-    ["+abc-0000123",{"colletters":"abc","rowsign":"-","rowdigits":"123"}]
+    ["**",{"colstar":"*","rowstar":"*","star":"*"}]
+    ["a1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
+    ["-a1",{"colsign":"-","colletters":"a","rowdigits":"1","colnr":-1,"rownr":1}]
+    ["a-1",{"colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1}]
+    ["-a-1",{"colsign":"-","colletters":"a","rowsign":"-","rowdigits":"1","colnr":-1,"rownr":-1}]
+    ["+a01",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
+    ["a*",{"colletters":"a","rowstar":"*","colnr":1}]
+    ["+a*",{"colletters":"a","rowstar":"*","colnr":1}]
+    ["-a*",{"colsign":"-","colletters":"a","rowstar":"*","colnr":-1}]
+    ["*1",{"colstar":"*","rowdigits":"1","rownr":1}]
+    ["*+12",{"colstar":"*","rowdigits":"12","rownr":12}]
+    ["*+00012",{"colstar":"*","rowdigits":"12","rownr":12}]
+    ["*-2",{"colstar":"*","rowsign":"-","rowdigits":"2","rownr":-2}]
+    ["a+1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
+    ["+a+1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
+    ["+a-1",{"colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1}]
+    ["+abc-123",{"colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123}]
+    ["+abc-0000123",{"colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123}]
+    ["z1",{"colletters":"z","rowdigits":"1","colnr":26,"rownr":1}]
+    ["aa1",{"colletters":"aa","rowdigits":"1","colnr":27,"rownr":1}]
+    ["ab1",{"colletters":"ab","rowdigits":"1","colnr":28,"rownr":1}]
+    ["ac1",{"colletters":"ac","rowdigits":"1","colnr":29,"rownr":1}]
+    ["ay1",{"colletters":"ay","rowdigits":"1","colnr":51,"rownr":1}]
+    ["az1",{"colletters":"az","rowdigits":"1","colnr":52,"rownr":1}]
+    ["ba1",{"colletters":"ba","rowdigits":"1","colnr":53,"rownr":1}]
+    ["cv1",{"colletters":"cv","rowdigits":"1","colnr":100,"rownr":1}]
+    ["all1",{"colletters":"all","rowdigits":"1","colnr":1000,"rownr":1}]
     ["++a-1",null]
     ["***",null]
     ["+*1",null]
     ["-*1",null]
-    ]
+   ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
       result = INTERGRID.A1CELLS.parse_cellkey probe
     catch error
       if ( matcher is null ) and ( error.message.match /expected a cellkey like 'a1', '\*', '\*4' or 'c-1, got '/ )?
-        urge '77812', ( jr [ probe, null, ] )
+        # urge '77812', ( jr [ probe, null, ] )
         T.ok true
       else
         T.fail error.message
       continue
-    urge '77812', ( jr [ probe, result, ] )
+    # urge '77812', ( jr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.A1CELLS.get_cellkey" ] = ( T, done ) ->
+@[ "INTERGRID.A1CELLS.get_cellkey 1" ] = ( T, done ) ->
   probes_and_matchers = [
-    [{"rownr":1,"colnr":1},"a1"]
-    [{"rownr":1,"colnr":2},"b1"]
-    [{"rownr":1,"colnr":3},"c1"]
-    [{"rownr":1,"colnr":4},"d1"]
-    [{"rownr":1,"colnr":5},"e1"]
-    [{"rownr":1,"colnr":6},"f1"]
-    [{"rownr":1,"colnr":7},"g1"]
-    [{"rownr":1,"colnr":8},"h1"]
-    [{"rownr":1,"colnr":9},"i1"]
-    [{"rownr":1,"colnr":10},"j1"]
-    [{"rownr":1,"colnr":26},"z1"]
-    [{"rownr":1,"colnr":27},"aa1"]
-    [{"rownr":1,"colnr":28},"ab1"]
-    [{"rownr":1,"colnr":29},"ac1"]
-    [{"rownr":1,"colnr":51},"ay1"]
-    [{"rownr":1,"colnr":52},"az1"]
-    [{"rownr":1,"colnr":53},"ba1"]
-    [{"rownr":1,"colnr":100},"cv1"]
-    [{"rownr":1,"colnr":1000},"all1"]
+    [{"colnr":1,"rownr":1},"a1"]
+    [{"colnr":2,"rownr":1},"b1"]
+    [{"colnr":3,"rownr":1},"c1"]
+    [{"colnr":4,"rownr":1},"d1"]
+    [{"colnr":5,"rownr":1},"e1"]
+    [{"colnr":6,"rownr":1},"f1"]
+    [{"colnr":7,"rownr":1},"g1"]
+    [{"colnr":8,"rownr":1},"h1"]
+    [{"colnr":9,"rownr":1},"i1"]
+    [{"colnr":10,"rownr":1},"j1"]
+    [{"colnr":26,"rownr":1},"z1"]
+    [{"colnr":27,"rownr":1},"aa1"]
+    [{"colnr":28,"rownr":1},"ab1"]
+    [{"colnr":29,"rownr":1},"ac1"]
+    [{"colnr":51,"rownr":1},"ay1"]
+    [{"colnr":52,"rownr":1},"az1"]
+    [{"colnr":53,"rownr":1},"ba1"]
+    [{"colnr":100,"rownr":1},"cv1"]
+    [{"colnr":1000,"rownr":1},"all1"]
     ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
@@ -303,11 +277,174 @@ INTERGRID                 = require '../..'
     catch error
       T.fail error.message
       continue
-    urge '77811', ( jr [ probe, result, ] )
-    # T.eq result, matcher
+    # urge '77811', ( jr [ probe, result, ] )
+    T.eq result, matcher
   #.........................................................................................................
   done()
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "INTERGRID.A1CELLS.get_cellkey 2" ] = ( T, done ) ->
+  probes_and_matchers = [
+    ["a1","a1"]
+    ["b1","b1"]
+    ["c1","c1"]
+    ["d1","d1"]
+    ["e1","e1"]
+    ["f1","f1"]
+    ["g1","g1"]
+    ["h1","h1"]
+    ["i1","i1"]
+    ["j1","j1"]
+    ["z1","z1"]
+    ["aa1","aa1"]
+    ["ab1","ab1"]
+    ["ac1","ac1"]
+    ["ay1","ay1"]
+    ["az1","az1"]
+    ["ba1","ba1"]
+    ["cv1","cv1"]
+    ["all1","all1"]
+    ["+a1","a1"]
+    ["+b1","b1"]
+    ["+c1","c1"]
+    ["+d1","d1"]
+    ["+e1","e1"]
+    ["+f1","f1"]
+    ["+g1","g1"]
+    ["+h1","h1"]
+    ["+i1","i1"]
+    ["+j1","j1"]
+    ["+z1","z1"]
+    ["+aa1","aa1"]
+    ["+ab1","ab1"]
+    ["+ac1","ac1"]
+    ["+ay1","ay1"]
+    ["+az1","az1"]
+    ["+ba1","ba1"]
+    ["+cv1","cv1"]
+    ["+all1","all1"]
+    ["+a+012","a12"]
+    ["+b+012","b12"]
+    ["+c+012","c12"]
+    ["+d+012","d12"]
+    ["+e+012","e12"]
+    ["+f+012","f12"]
+    ["+g+012","g12"]
+    ["+h+012","h12"]
+    ["+i+012","i12"]
+    ["+j+012","j12"]
+    ["+z+012","z12"]
+    ["+aa+012","aa12"]
+    ["+ab+012","ab12"]
+    ["+ac+012","ac12"]
+    ["+ay+012","ay12"]
+    ["+az+012","az12"]
+    ["+ba+012","ba12"]
+    ["+cv+012","cv12"]
+    ["+all+012","all12"]
+    ["-all1","-all1"]
+    ["-a+012","-a12"]
+    ["-b+012","-b12"]
+    ["-c+012","-c12"]
+    ["-d+012","-d12"]
+    ["-e+012","-e12"]
+    ["-f+012","-f12"]
+    ["-g+012","-g12"]
+    ["-h+012","-h12"]
+    ["-i+012","-i12"]
+    ["-j+012","-j12"]
+    ["-z+012","-z12"]
+    ["-aa+012","-aa12"]
+    ["-ab+012","-ab12"]
+    ["-ac+012","-ac12"]
+    ["-ay+012","-ay12"]
+    ["-az+012","-az12"]
+    ["-ba+012","-ba12"]
+    ["-cv+012","-cv12"]
+    ["-all+012","-all12"]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, ] in probes_and_matchers
+    try
+      result_1 = INTERGRID.A1CELLS.get_cellkey INTERGRID.A1CELLS.parse_cellkey probe
+    catch error
+      T.fail error.message
+      continue
+    # urge '77811', ( jr [ probe, result_1, ] )
+    T.eq result_1, matcher
+    result_2 = INTERGRID.A1CELLS.normalize_cellkey probe
+    T.eq result_2, matcher
+  #.........................................................................................................
+  done()
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "INTERGRID.A1CELLS.get_cellkey 3" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [{},"*"]
+    [{"colstar":"*"},"*"]
+    [{"rowstar":"*"},"*"]
+    [{"colstar":"*","rowstar":"*"},"*"]
+    [{"star":"*"},"*"]
+    [{"colnr":10,"rowstar":"*"},"j*"]
+    [{"colnr":26,"rowstar":"*"},"z*"]
+    [{"colnr":27,"rowstar":"*"},"aa*"]
+    [{"colnr":53,"rowstar":"*"},"ba*"]
+    [{"colnr":100,"rowstar":"*"},"cv*"]
+    [{"colnr":1000,"rowstar":"*"},"all*"]
+    [{"colnr":-10,"rowstar":"*"},"-j*"]
+    [{"colnr":-26,"rowstar":"*"},"-z*"]
+    [{"colnr":-27,"rowstar":"*"},"-aa*"]
+    [{"colnr":-53,"rowstar":"*"},"-ba*"]
+    [{"colnr":-100,"rowstar":"*"},"-cv*"]
+    [{"colnr":-1000,"rowstar":"*"},"-all*"]
+    [{"colnr":10},"j*"]
+    [{"colnr":26},"z*"]
+    [{"colnr":27},"aa*"]
+    [{"colnr":53},"ba*"]
+    [{"colnr":100},"cv*"]
+    [{"colnr":1000},"all*"]
+    [{"colnr":-10},"-j*"]
+    [{"colnr":-26},"-z*"]
+    [{"colnr":-27},"-aa*"]
+    [{"colnr":-53},"-ba*"]
+    [{"colnr":-100},"-cv*"]
+    [{"colnr":-1000},"-all*"]
+    [{"rownr":10},"*10"]
+    [{"rownr":26},"*26"]
+    [{"rownr":27},"*27"]
+    [{"rownr":53},"*53"]
+    [{"rownr":100},"*100"]
+    [{"rownr":1000},"*1000"]
+    [{"rownr":-10},"*-10"]
+    [{"rownr":-26},"*-26"]
+    [{"rownr":-27},"*-27"]
+    [{"rownr":-53},"*-53"]
+    [{"rownr":-100},"*-100"]
+    [{"rownr":-1000},"*-1000"]
+    [{"rownr":10,"colstar":"*"},"*10"]
+    [{"rownr":26,"colstar":"*"},"*26"]
+    [{"rownr":27,"colstar":"*"},"*27"]
+    [{"rownr":53,"colstar":"*"},"*53"]
+    [{"rownr":100,"colstar":"*"},"*100"]
+    [{"rownr":1000,"colstar":"*"},"*1000"]
+    [{"rownr":-10,"colstar":"*"},"*-10"]
+    [{"rownr":-26,"colstar":"*"},"*-26"]
+    [{"rownr":-27,"colstar":"*"},"*-27"]
+    [{"rownr":-53,"colstar":"*"},"*-53"]
+    [{"rownr":-100,"colstar":"*"},"*-100"]
+    [{"rownr":-1000,"colstar":"*"},"*-1000"]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, ] in probes_and_matchers
+    try
+      result = INTERGRID.A1CELLS.get_cellkey probe
+    catch error
+      T.fail "probe #{jr probe}: #{error.message}"
+      continue
+    # urge '77811', ( jr [ probe, result, ] )
+    T.eq result, matcher
+  #.........................................................................................................
+  done()
 
 
 ############################################################################################################
@@ -319,8 +456,9 @@ unless module.parent?
     "INTERGRID.A1LETTERS.get_number 2"
     "INTERGRID.A1CELLS cellref pattern"
     "INTERGRID.A1CELLS.parse_cellkey"
-    # "INTERGRID.A1CELLS.get_cellref"
-    # "INTERGRID.A1CELLS.get_cellkey"
+    "INTERGRID.A1CELLS.get_cellkey 1"
+    "INTERGRID.A1CELLS.get_cellkey 2"
+    "INTERGRID.A1CELLS.get_cellkey 3"
     ]
   @_prune()
   @_main()
