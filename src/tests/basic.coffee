@@ -538,12 +538,12 @@ INTERGRID                 = require '../..'
     [["a1","b2..a1"],null]
     [["c-5","b1..c12"],null]
     [["-c-5","b1..c12"],null]
-    [["d4","a1..b2"],{"topleft":"a1","topright":"b1","bottomleft":"a2","bottomright":"b2"}]
-    [["c-12","a1..b11"],{"topleft":"a1","topright":"b1","bottomleft":"a11","bottomright":"b11"}]
-    [["-c-12","a1..b11"],{"topleft":"b1","topright":"a1","bottomleft":"b11","bottomright":"a11"}]
-    [["d4","-a1..c3"],{"topleft":"a1","topright":"b1","bottomleft":"a11","bottomright":"b11"}]
-    [["d4","-a-1..c3"],{"topleft":"c3","topright":"d3","bottomleft":"c4","bottomright":"d4"}]
-    [["d4","-a-1..a1"],{"topleft":"a1","topright":"d1","bottomleft":"a4","bottomright":"d4"}]
+    [["d4","a1..b2"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a2","bottomright_key":"b2"}]
+    [["c-12","a1..b11"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a11","bottomright_key":"b11"}]
+    [["-c-12","a1..b11"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a11","bottomright_key":"b11"}]
+    [["d4","-a1..c3"],{"topleft_key":"c1","topright_key":"d1","bottomleft_key":"c3","bottomright_key":"d3"}]
+    [["d4","-a-1..c3"],{"topleft_key":"c3","topright_key":"d3","bottomleft_key":"c4","bottomright_key":"d4"}]
+    [["d4","-a-1..a1"],{"topleft_key":"a1","topright_key":"d1","bottomleft_key":"a4","bottomright_key":"d4"}]
     ]
   #.........................................................................................................
   for [ [ grid_probe, rangekey_probe ], matcher, ] in probes_and_matchers
@@ -552,15 +552,15 @@ INTERGRID                 = require '../..'
     try
       result = INTERGRID.GRID.parse_rangekey grid, rangekey_probe
     catch error
-      urge '77812', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+      urge '50901-1', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '77812', ( jr [ probe, null, ] )
+        # urge '50901-2', ( jr [ probe, null, ] )
         T.ok true
       else
         # throw error
         T.fail "#{rpr [ grid_probe, rangekey_probe ]} failed with #{error.message}"
       continue
-    urge '77812', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+    urge '50901-3', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -572,7 +572,7 @@ INTERGRID                 = require '../..'
     [["d4","d5"],null]
     [["d4","e4"],null]
     [["d4","b1"],{"colletters":"b","rowdigits":"1","colnr":2,"rownr":1}]
-    [["d4","-b1"],{"colletters":"c","rowdigits":"3","colnr":3,"rownr":3}]
+    [["d4","-b1"],{"colletters":"c","rowdigits":"1","colnr":3,"rownr":1}]
     [["d4","a1"],{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
     [["d4","c3"],{"colletters":"c","rowdigits":"3","colnr":3,"rownr":3}]
     [["d4","-a1"],{"colletters":"d","rowdigits":"1","colnr":4,"rownr":1}]
@@ -585,15 +585,15 @@ INTERGRID                 = require '../..'
     try
       result = INTERGRID.GRID.parse_cellkey grid, rangekey_probe
     catch error
-      urge '77812', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+      urge '76544-1', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '77812', ( jr [ probe, null, ] )
+        # urge '76544-2', ( jr [ probe, null, ] )
         T.ok true
       else
         # throw error
         T.fail "#{rpr [ grid_probe, rangekey_probe ]} failed with #{error.message}"
       continue
-    urge '77812', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+    urge '76544-3', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -603,19 +603,19 @@ INTERGRID                 = require '../..'
 ############################################################################################################
 unless module.parent?
   include = [
-    # "INTERGRID.LETTERS.get_letters 1"
-    # "INTERGRID.LETTERS.get_letters 2"
-    # "INTERGRID.LETTERS.get_number 1"
-    # "INTERGRID.LETTERS.get_number 2"
-    # "INTERGRID.CELLS cellref pattern"
-    # "INTERGRID.CELLS.parse_cellkey"
-    # "INTERGRID.CELLS.get_cellkey 1"
-    # "INTERGRID.CELLS.get_cellkey 2"
-    # "INTERGRID.CELLS.get_cellkey 3"
-    # "INTERGRID.GRID.new_grid_from_cellkey 1"
-    # "INTERGRID.GRID.abs_cellref 1"
-    # "INTERGRID.GRID.abs_cellkey 1"
-    # "INTERGRID.GRID.parse_rangekey 1"
+    "INTERGRID.LETTERS.get_letters 1"
+    "INTERGRID.LETTERS.get_letters 2"
+    "INTERGRID.LETTERS.get_number 1"
+    "INTERGRID.LETTERS.get_number 2"
+    "INTERGRID.CELLS cellref pattern"
+    "INTERGRID.CELLS.parse_cellkey"
+    "INTERGRID.CELLS.get_cellkey 1"
+    "INTERGRID.CELLS.get_cellkey 2"
+    "INTERGRID.CELLS.get_cellkey 3"
+    "INTERGRID.GRID.new_grid_from_cellkey 1"
+    "INTERGRID.GRID.abs_cellref 1"
+    "INTERGRID.GRID.abs_cellkey 1"
+    "INTERGRID.GRID.parse_rangekey 1"
     "INTERGRID.GRID.parse_cellkey 1"
     ]
   @_prune()
