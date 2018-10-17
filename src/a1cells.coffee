@@ -15,6 +15,7 @@ help                      = CND.get_logger 'help',      badge
 urge                      = CND.get_logger 'urge',      badge
 echo                      = CND.echo.bind CND
 #...........................................................................................................
+assign                    = Object.assign
 new_xregex                = require 'xregexp'
 A1LETTERS                 = require './a1letters'
 
@@ -124,6 +125,17 @@ A1LETTERS                 = require './a1letters'
 
 #-----------------------------------------------------------------------------------------------------------
 @normalize_cellkey = ( cellkey ) -> @get_cellkey @parse_cellkey cellkey
+@normalize_cellref = ( cellref ) -> @parse_cellkey @get_cellkey cellref
+
+#-----------------------------------------------------------------------------------------------------------
+@abs_cellref = ( cellref ) ->
+  R = assign cellref
+  delete R.colsign
+  delete R.rowsign
+  R.colnr = Math.abs R.colnr if R.colnr?
+  R.rownr = Math.abs R.rownr if R.rownr?
+  return R
+
 
 
 

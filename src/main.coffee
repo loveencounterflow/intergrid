@@ -18,3 +18,6 @@ echo                      = CND.echo.bind CND
 jr                        = JSON.stringify
 @LETTERS                  = require './a1letters'
 @CELLS                    = require './a1cells'
+@GRID                     = require './grid'
+
+
