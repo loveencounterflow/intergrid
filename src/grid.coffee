@@ -18,7 +18,7 @@ echo                      = CND.echo.bind CND
 jr                        = JSON.stringify
 assign                    = Object.assign
 new_xregex                = require 'xregexp'
-# LETTERS                   = require './a1letters'
+LETTERS                   = require './a1letters'
 CELLS                     = require './a1cells'
 
 #-----------------------------------------------------------------------------------------------------------
@@ -42,15 +42,16 @@ CELLS                     = require './a1cells'
 
 #-----------------------------------------------------------------------------------------------------------
 @abs_cellref = ( grid, cellref ) ->
-  R = assign {}, cellref
   R = CELLS.normalize_cellref cellref
   #.........................................................................................................
   if R.colsign?
-    R.colnr = grid.width + 1 + R.colnr
+    R.colnr       = grid.width + 1 + R.colnr
+    R.colletters  = LETTERS.get_letters R.colnr
     delete R.colsign
   #.........................................................................................................
   if R.rowsign?
-    R.rownr = grid.height + 1 + R.rownr
+    R.rownr     = grid.height + 1 + R.rownr
+    R.rowdigits = "#{R.rownr}"
     delete R.rowsign
   #.........................................................................................................
   if ( R.colnr <= 0 ) or ( R.colnr > grid.width )
