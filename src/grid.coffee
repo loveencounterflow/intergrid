@@ -128,11 +128,11 @@ CELLS                     = require './a1cells'
   unless @is_above_cellref grid, cellref_1, cellref_2
     [ top_digits, bottom_digits, ] = [ bottom_digits, top_digits, ]
   #.........................................................................................................
-  topleft         = "#{left_letters}#{top_digits}"
-  topright        = "#{right_letters}#{top_digits}"
-  bottomleft      = "#{left_letters}#{bottom_digits}"
-  bottomright     = "#{right_letters}#{bottom_digits}"
+  topleft_key               = "#{left_letters}#{top_digits}"
+  topright_key              = "#{right_letters}#{top_digits}"
+  bottomleft_key            = "#{left_letters}#{bottom_digits}"
+  bottomright_key           = "#{right_letters}#{bottom_digits}"
   #.........................................................................................................
-  return { topleft, topright, bottomleft, bottomright, }
+  return { topleft_key, topright_key, bottomleft_key, bottomright_key, }
 
 
