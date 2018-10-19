@@ -129,11 +129,12 @@ A1LETTERS                 = require './a1letters'
 
 #-----------------------------------------------------------------------------------------------------------
 @abs_cellref = ( cellref ) ->
-  R = assign cellref
+  R = assign {}, cellref
   delete R.colsign
   delete R.rowsign
-  R.colnr = Math.abs R.colnr if R.colnr?
-  R.rownr = Math.abs R.rownr if R.rownr?
+  R.colnr   = Math.abs R.colnr if R.colnr?
+  R.rownr   = Math.abs R.rownr if R.rownr?
+  R.cellkey = @get_cellkey R
   return R
 
 
