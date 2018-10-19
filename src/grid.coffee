@@ -59,6 +59,7 @@ CELLS                     = require './a1cells'
   if ( R.rownr <= 0 ) or ( R.rownr > grid.height )
     throw new Error "µ9949 row nr #{rpr cellref.rownr} exceeds grid height #{rpr grid.height}"
   #.........................................................................................................
+  R.cellkey = CELLS.get_cellkey R
   return R
 
 #-----------------------------------------------------------------------------------------------------------
