@@ -175,6 +175,18 @@ return the same written with leading zeroes and plus signs removed. This is
 identical to
 `IG.CELLS.get_cellkey(IG.CELLS.parse_cellkey(cellkey))`.
 
+### Module `IG.GRID`
+
+-------------------------
+
+**`INTERGRID.GRID.walk_cells_from_key = ( grid, key ) ->`** Given a `grid` and a
+generalized `key`, which may contain stars and plus or minus signs and may be
+written as a cellkey or a rangekey, return an iterator over all the `cellref`s
+in the `grid`. Constructs like `'a1'`, `'b-1'`, `'c*'`, `'d2..e4'` and so on are
+all allowed as long as they stay within the boundaries of the grid.
+
+-------------------------
+
 # Disclaimer
 
 > This software is a non-profit effort and free to use for anyone. It is not in
