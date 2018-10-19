@@ -112,28 +112,31 @@ CELLS                     = require './a1cells'
 
 #-----------------------------------------------------------------------------------------------------------
 @parse_rangekey = ( grid, rangekey ) ->
-  cellkeys = rangekey.split @settings.rangemark
-  unless cellkeys.length is 2
-    throw new Error "µ9949 expected rangekey, got #{rpr rangekey}"
-  [ cellkey_1, cellkey_2, ] = cellkeys
-  cellref_1                 = @abs_cellref grid, CELLS.parse_cellkey cellkey_1
-  cellref_2                 = @abs_cellref grid, CELLS.parse_cellkey cellkey_2
-  left_letters              = cellref_1.colletters
-  right_letters             = cellref_2.colletters
-  top_digits                = cellref_1.rowdigits
-  bottom_digits             = cellref_2.rowdigits
+  if ( rangekey.match /^(?:[*]|[*]{1,2}\.\.[*]{1,2})$/ )?
+    left_colnr    = 1
+    right_colnr   = grid.width
+    top_rownr     = 1
+    bottom_rownr  = grid.height
   #.........................................................................................................
-  unless @is_left_of_cellref grid, cellref_1, cellref_2
-    [ left_letters, right_letters, ] = [ right_letters, left_letters, ]
+  else
+    cellkeys = rangekey.split @settings.rangemark
+    #.......................................................................................................
+    unless cellkeys.length is 2
+      throw new Error "µ9949 expected rangekey, got #{rpr rangekey}"
+    #.......................................................................................................
+    [ cellkey_1, cellkey_2, ] = cellkeys
+    cellref_1                 = @abs_cellref grid, CELLS.parse_cellkey cellkey_1
+    cellref_2                 = @abs_cellref grid, CELLS.parse_cellkey cellkey_2
+    #.......................................................................................................
+    if cellref_1.colstar? or cellref_2.colstar? then  [ left_colnr, right_colnr, ] = [               1, grid.width,      ]
+    else                                              [ left_colnr, right_colnr, ] = [ cellref_1.colnr, cellref_2.colnr, ]
+    #.......................................................................................................
+    if cellref_1.rowstar? or cellref_2.rowstar? then  [ top_rownr, bottom_rownr, ] = [               1, grid.height,     ]
+    else                                              [ top_rownr, bottom_rownr, ] = [ cellref_1.rownr, cellref_2.rownr, ]
+    #.......................................................................................................
+    [ left_colnr, right_colnr, ] = [ right_colnr, left_colnr, ] if right_colnr < left_colnr
+    [ top_rownr, bottom_rownr, ] = [ bottom_rownr, top_rownr, ] if bottom_rownr < top_rownr
   #.........................................................................................................
-  unless @is_above_cellref grid, cellref_1, cellref_2
-    [ top_digits, bottom_digits, ] = [ bottom_digits, top_digits, ]
-  #.........................................................................................................
-  topleft_key               = "#{left_letters}#{top_digits}"
-  topright_key              = "#{right_letters}#{top_digits}"
-  bottomleft_key            = "#{left_letters}#{bottom_digits}"
-  bottomright_key           = "#{right_letters}#{bottom_digits}"
-  #.........................................................................................................
-  return { topleft_key, topright_key, bottomleft_key, bottomright_key, }
+  return { '~isa:': 'INTERGRID/rangeref', left_colnr, right_colnr, top_rownr, bottom_rownr, }
 
 
