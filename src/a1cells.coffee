@@ -18,6 +18,7 @@ echo                      = CND.echo.bind CND
 assign                    = Object.assign
 new_xregex                = require 'xregexp'
 A1LETTERS                 = require './a1letters'
+jr                        = JSON.stringify
 
 #-----------------------------------------------------------------------------------------------------------
 @settings =
