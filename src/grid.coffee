@@ -30,7 +30,7 @@ CELLS                     = require './a1cells'
   cellref = CELLS.abs_cellref CELLS.parse_cellkey cellkey
   width   = cellref.colnr
   height  = cellref.rownr
-  return { '~isa': 'INTERGRID/GRID/grid', width, height, }
+  return { '~isa': 'INTERGRID/grid', width, height, }
 
 # #-----------------------------------------------------------------------------------------------------------
 # @is_left_of_cellkey = ( grid, cellkey_1, cellkey_2 ) ->
