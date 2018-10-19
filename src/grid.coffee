@@ -22,6 +22,14 @@ LETTERS                   = require './a1letters'
 CELLS                     = require './a1cells'
 
 #-----------------------------------------------------------------------------------------------------------
+contains = ( text, pattern ) ->
+  ### TAINT move to helper library, CND, ... ###
+  switch CND.type_of pattern
+    when 'regex' then return ( text.match pattern )?
+    else throw new Error "pattern not supported: #{rpr pattern}"
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
 @settings =
   rangemark: '..'
 
@@ -142,6 +150,17 @@ CELLS                     = require './a1cells'
 
 #===========================================================================================================
 # ITERATORS
+#-----------------------------------------------------------------------------------------------------------
+@walk_cells_from_key = ( grid, key ) ->
+  key = key + '..' + key unless contains key, /\.\./
+  yield from @walk_cells_from_rangekey grid, key
+  yield return
+
+#-----------------------------------------------------------------------------------------------------------
+@walk_cells_from_rangekey = ( grid, rangekey ) ->
+  yield from @walk_cells_from_rangeref grid, @parse_rangekey grid, rangekey
+  yield return
+
 #-----------------------------------------------------------------------------------------------------------
 @walk_cells_from_rangeref = ( grid, rangeref ) ->
   ### TAINT should complain on rangeref out of grid bounds ###

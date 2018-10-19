@@ -607,6 +607,46 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   done()
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "INTERGRID.GRID.walk_cells_from_key" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [["d5","d7"],null]
+    [["d5","e4"],null]
+    [["d5","b1"],["b1"]]
+    [["d5","-b1"],["c1"]]
+    [["d5","a1"],["a1"]]
+    [["d5","c3"],["c3"]]
+    [["d5","-a1"],["d1"]]
+    [["d5","-a-1"],["d5"]]
+    [["c3","c*"],["c1","c2","c3"]]
+    [["c3","*"],["a1","b1","c1","a2","b2","c2","a3","b3","c3"]]
+    [["c3","*3"],["a3","b3","c3"]]
+    [["c3","*-1"],["a3","b3","c3"]]
+    ]
+  #.........................................................................................................
+  for [ [ grid_probe, key_probe ], matcher, ] in probes_and_matchers
+    grid    = INTERGRID.GRID.new_grid_from_cellkey grid_probe
+    result  = null
+    try
+      result = [ ( INTERGRID.GRID.walk_cells_from_key grid, key_probe )... ]
+    catch error
+      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
+        # urge '76544-2', ( jr [ probe, null, ] )
+        T.ok true
+      else
+        # throw error
+        T.fail "#{rpr [ grid_probe, key_probe ]} failed with #{error.message}"
+      continue
+    hits    = ( x.cellkey for x in result when x[ '~isa' ] is 'INTERGRID/cellref' )
+    fails   = ( x.cellkey for x in result when x[ '~isa' ] isnt 'INTERGRID/cellref' )
+    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], hits, ] )
+    # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
+    T.eq fails.length, 0
+    T.eq hits, matcher
+  #.........................................................................................................
+  done()
+
 
 ############################################################################################################
 unless module.parent?
@@ -625,6 +665,7 @@ unless module.parent?
     "INTERGRID.GRID.abs_cellkey 1"
     "INTERGRID.GRID.parse_cellkey 1"
     "INTERGRID.GRID.parse_rangekey 2"
+    "INTERGRID.GRID.walk_cells_from_key"
     ]
   @_prune()
   @_main()
