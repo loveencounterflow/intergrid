@@ -23,7 +23,6 @@ jr                        = JSON.stringify
 #-----------------------------------------------------------------------------------------------------------
 @settings =
   patterns:
-    # a1_lowercase:  /^(?<star>[*])|((?<colstar>[*])|(?<colsign>\+|-|)(?<colletters>[a-z]+))((?<rowstar>[*])|(?<rowsign>\+|-|)(?<rowdigits>[0-9]+))/
     a1_lowercase:  ///
     ^(?:
 
@@ -40,14 +39,29 @@ jr                        = JSON.stringify
         )
       )$
         ///
-    # a1_uppercase:  /^([*]|(\+|-|)(?:[a-z]+))([*]|(\+|-|)(?:[0-9]+))/
+    a1_uppercase:  ///
+    ^(?:
+
+    (?<star> [*] ) |
+      (?:
+        (?<colstar> [*] ) |
+          (?<colsign> \+ | - | )
+          (?<colletters> [A-Z]+ )
+          )
+      (?:
+        (?<rowstar> [*] ) |
+        (?<rowsign> \+ | - | )
+        (?<rowdigits> [0-9]+ )
+        )
+      )$
+        ///
 
 #-----------------------------------------------------------------------------------------------------------
 @parse_cellkey = ( cellkey ) ->
-  match = cellkey.match @settings.patterns.a1_lowercase
+  match = cellkey.match @settings.patterns.a1_uppercase
   #.........................................................................................................
   unless match?
-    throw new Error "µ9297 expected a cellkey like 'a1', '*', '*4' or 'c-1, got #{rpr cellkey}"
+    throw new Error "µ9297 expected a cellkey, got #{rpr cellkey}"
   #.........................................................................................................
   R = assign { '~isa': 'INTERGRID/cellref', },  match.groups
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
@@ -63,7 +77,7 @@ jr                        = JSON.stringify
     R.rowdigits = R.rowdigits.replace /^0*/, ''
   #.........................................................................................................
   if R.colletters?
-    R.colnr = A1LETTERS.get_number R.colletters, A1LETTERS.settings.alphabets.lowercase
+    R.colnr = A1LETTERS.get_number R.colletters, A1LETTERS.settings.alphabets.uppercase
     R.colnr *= -1 if R.colsign?
   #.........................................................................................................
   if R.rowdigits?
@@ -118,7 +132,7 @@ jr                        = JSON.stringify
   unless colletters?
     if colnr?
       colsign     = if colnr < 0 then '-' else ''
-      colletters  = A1LETTERS.get_letters ( Math.abs colnr ), A1LETTERS.settings.alphabets.lowercase
+      colletters  = A1LETTERS.get_letters ( Math.abs colnr ), A1LETTERS.settings.alphabets.uppercase
     else
       colletters = '*'
   #.........................................................................................................

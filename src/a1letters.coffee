@@ -56,7 +56,7 @@ def col_to_num(col_str):
   is prepended to the code to make up the next series). ###
   unless ( nr > 0 ) and ( nr is Math.floor nr )
     throw new Error "µ42347 expected positive integer, got #{rpr nr}"
-  alphabet ?= @settings.alphabets.lowercase
+  alphabet ?= @settings.alphabets.uppercase
   lcount    = alphabet.length
   R         = ''
   while nr > 0
@@ -67,7 +67,7 @@ def col_to_num(col_str):
 
 #-----------------------------------------------------------------------------------------------------------
 @get_number = ( letters, alphabet = null ) ->
-  alphabet ?= @settings.alphabets.lowercase
+  alphabet ?= @settings.alphabets.uppercase
   lcount    = alphabet.length
   expn = 0
   R = 0
