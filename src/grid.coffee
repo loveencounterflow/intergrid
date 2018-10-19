@@ -140,3 +140,60 @@ CELLS                     = require './a1cells'
   return { '~isa:': 'INTERGRID/rangeref', left_colnr, right_colnr, top_rownr, bottom_rownr, }
 
 
+#===========================================================================================================
+# ITERATORS
+#-----------------------------------------------------------------------------------------------------------
+@walk_cells_from_rangeref = ( grid, rangeref ) ->
+  ### TAINT should complain on rangeref out of grid bounds ###
+  for rownr in [ rangeref.top_rownr .. rangeref.bottom_rownr ] by +1
+    for colnr in [ rangeref.left_colnr .. rangeref.right_colnr ] by +1
+      # cellkey = CELLS.get_cellkey { colnr, rownr, }
+      yield CELLS.normalize_cellref { colnr, rownr, }
+  yield return
+
+#-----------------------------------------------------------------------------------------------------------
+@walk_colletters_and_colnrs = ( grid ) ->
+  yield [ ( LETTERS.get_letters colnr ), colnr, ] for colnr in [ 1 .. grid.width ]
+  yield return
+
+#-----------------------------------------------------------------------------------------------------------
+@walk_rownrs = ( grid ) ->
+  yield rownr for rownr in [ 1 .. grid.height ]
+  yield return
+
+#-----------------------------------------------------------------------------------------------------------
+@walk_edge_cellrefs = ( grid, edge ) ->
+  switch edge
+    when 'left'
+      colnr_1    = 1
+      colnr_2    = 1
+      rownr_1    = 1
+      rownr_2    = grid.height
+    when 'right'
+      colnr_1    = grid.width
+      colnr_2    = grid.width
+      rownr_1    = 1
+      rownr_2    = grid.height
+    when 'top'
+      colnr_1    = 1
+      colnr_2    = grid.width
+      rownr_1    = 1
+      rownr_2    = 1
+    when 'bottom'
+      colnr_1    = 1
+      colnr_2    = grid.width
+      rownr_1    = grid.height
+      rownr_2    = grid.height
+    when '*'
+      yield from @walk_edge_cellrefs grid, 'left'
+      yield from @walk_edge_cellrefs grid, 'right'
+      yield from @walk_edge_cellrefs grid, 'top'
+      yield from @walk_edge_cellrefs grid, 'bottom'
+      yield return
+    else
+      throw new Error "µ9949 illegal argument for edge #{rpr edge}"
+  for rownr in [ rownr_1 .. rownr_2 ]
+    for colnr in [ colnr_1 .. colnr_2 ]
+      yield CELLS.normalize_cellref { colnr, rownr, }
+  yield return
+
