@@ -61,6 +61,8 @@ the following attributes:
   1 when `cellletters` is set.
 * **`rownr`**—Set to the numerical value of the referenced row, starting with 1
   when `rowdigits` is set.
+* **`cellkey`**—Set to the concatenation of `colletters` and `rowdigits` where
+  those are set.
 
 The sum total of allowed cellrefs is succinctly captured by this railroad diagram:
 
