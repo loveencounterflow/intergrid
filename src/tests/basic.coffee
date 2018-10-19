@@ -198,40 +198,36 @@ INTERGRID                 = require '../..'
 #-----------------------------------------------------------------------------------------------------------
 @[ "INTERGRID.CELLS.parse_cellkey" ] = ( T, done ) ->
   probes_and_matchers = [
-    ["*",{"star":"*","colstar":"*","rowstar":"*"}]
-    ["**",{"colstar":"*","rowstar":"*","star":"*"}]
-    ["a1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
-    ["-a1",{"colsign":"-","colletters":"a","rowdigits":"1","colnr":-1,"rownr":1}]
-    ["a-1",{"colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1}]
-    ["-a-1",{"colsign":"-","colletters":"a","rowsign":"-","rowdigits":"1","colnr":-1,"rownr":-1}]
-    ["+a01",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
-    ["a*",{"colletters":"a","rowstar":"*","colnr":1}]
-    ["+a*",{"colletters":"a","rowstar":"*","colnr":1}]
-    ["-a*",{"colsign":"-","colletters":"a","rowstar":"*","colnr":-1}]
-    ["*1",{"colstar":"*","rowdigits":"1","rownr":1}]
-    ["*+12",{"colstar":"*","rowdigits":"12","rownr":12}]
-    ["*+00012",{"colstar":"*","rowdigits":"12","rownr":12}]
-    ["*-2",{"colstar":"*","rowsign":"-","rowdigits":"2","rownr":-2}]
-    ["a+1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
-    ["+a+1",{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
-    ["+a-1",{"colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1}]
-    ["+abc-123",{"colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123}]
-    ["+abc-0000123",{"colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123}]
-    ["z1",{"colletters":"z","rowdigits":"1","colnr":26,"rownr":1}]
-    ["aa1",{"colletters":"aa","rowdigits":"1","colnr":27,"rownr":1}]
-    ["ab1",{"colletters":"ab","rowdigits":"1","colnr":28,"rownr":1}]
-    ["ac1",{"colletters":"ac","rowdigits":"1","colnr":29,"rownr":1}]
-    ["ay1",{"colletters":"ay","rowdigits":"1","colnr":51,"rownr":1}]
-    ["az1",{"colletters":"az","rowdigits":"1","colnr":52,"rownr":1}]
-    ["ba1",{"colletters":"ba","rowdigits":"1","colnr":53,"rownr":1}]
-    ["cv1",{"colletters":"cv","rowdigits":"1","colnr":100,"rownr":1}]
-    ["all1",{"colletters":"all","rowdigits":"1","colnr":1000,"rownr":1}]
-    ["++a-1",null]
-    ["***",null]
-    ["+*1",null]
-    ["-*1",null]
-    ["whassupman1",{ colletters: 'whassupman',  rowdigits: '1',  colnr: 126563337975660,  rownr: 1 }]
-   ]
+    ["*",{"~isa":"INTERGRID/cellref","star":"*","colstar":"*","rowstar":"*","cellkey":"*"}]
+    ["**",{"~isa":"INTERGRID/cellref","colstar":"*","rowstar":"*","star":"*","cellkey":"*"}]
+    ["a1",{"~isa":"INTERGRID/cellref","colletters":"a","rowdigits":"1","colnr":1,"rownr":1,"cellkey":"a1"}]
+    ["-a1",{"~isa":"INTERGRID/cellref","colsign":"-","colletters":"a","rowdigits":"1","colnr":-1,"rownr":1,"cellkey":"-a1"}]
+    ["a-1",{"~isa":"INTERGRID/cellref","colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1,"cellkey":"a-1"}]
+    ["-a-1",{"~isa":"INTERGRID/cellref","colsign":"-","colletters":"a","rowsign":"-","rowdigits":"1","colnr":-1,"rownr":-1,"cellkey":"-a-1"}]
+    ["+a01",{"~isa":"INTERGRID/cellref","colletters":"a","rowdigits":"1","colnr":1,"rownr":1,"cellkey":"a1"}]
+    ["a*",{"~isa":"INTERGRID/cellref","colletters":"a","rowstar":"*","colnr":1,"cellkey":"a*"}]
+    ["+a*",{"~isa":"INTERGRID/cellref","colletters":"a","rowstar":"*","colnr":1,"cellkey":"a*"}]
+    ["-a*",{"~isa":"INTERGRID/cellref","colsign":"-","colletters":"a","rowstar":"*","colnr":-1,"cellkey":"-a*"}]
+    ["*1",{"~isa":"INTERGRID/cellref","colstar":"*","rowdigits":"1","rownr":1,"cellkey":"*1"}]
+    ["*+12",{"~isa":"INTERGRID/cellref","colstar":"*","rowdigits":"12","rownr":12,"cellkey":"*12"}]
+    ["*+00012",{"~isa":"INTERGRID/cellref","colstar":"*","rowdigits":"12","rownr":12,"cellkey":"*12"}]
+    ["*-2",{"~isa":"INTERGRID/cellref","colstar":"*","rowsign":"-","rowdigits":"2","rownr":-2,"cellkey":"*-2"}]
+    ["a+1",{"~isa":"INTERGRID/cellref","colletters":"a","rowdigits":"1","colnr":1,"rownr":1,"cellkey":"a1"}]
+    ["+a+1",{"~isa":"INTERGRID/cellref","colletters":"a","rowdigits":"1","colnr":1,"rownr":1,"cellkey":"a1"}]
+    ["+a-1",{"~isa":"INTERGRID/cellref","colletters":"a","rowsign":"-","rowdigits":"1","colnr":1,"rownr":-1,"cellkey":"a-1"}]
+    ["+abc-123",{"~isa":"INTERGRID/cellref","colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123,"cellkey":"abc-123"}]
+    ["+abc-0000123",{"~isa":"INTERGRID/cellref","colletters":"abc","rowsign":"-","rowdigits":"123","colnr":731,"rownr":-123,"cellkey":"abc-123"}]
+    ["z1",{"~isa":"INTERGRID/cellref","colletters":"z","rowdigits":"1","colnr":26,"rownr":1,"cellkey":"z1"}]
+    ["aa1",{"~isa":"INTERGRID/cellref","colletters":"aa","rowdigits":"1","colnr":27,"rownr":1,"cellkey":"aa1"}]
+    ["ab1",{"~isa":"INTERGRID/cellref","colletters":"ab","rowdigits":"1","colnr":28,"rownr":1,"cellkey":"ab1"}]
+    ["ac1",{"~isa":"INTERGRID/cellref","colletters":"ac","rowdigits":"1","colnr":29,"rownr":1,"cellkey":"ac1"}]
+    ["ay1",{"~isa":"INTERGRID/cellref","colletters":"ay","rowdigits":"1","colnr":51,"rownr":1,"cellkey":"ay1"}]
+    ["az1",{"~isa":"INTERGRID/cellref","colletters":"az","rowdigits":"1","colnr":52,"rownr":1,"cellkey":"az1"}]
+    ["ba1",{"~isa":"INTERGRID/cellref","colletters":"ba","rowdigits":"1","colnr":53,"rownr":1,"cellkey":"ba1"}]
+    ["cv1",{"~isa":"INTERGRID/cellref","colletters":"cv","rowdigits":"1","colnr":100,"rownr":1,"cellkey":"cv1"}]
+    ["all1",{"~isa":"INTERGRID/cellref","colletters":"all","rowdigits":"1","colnr":1000,"rownr":1,"cellkey":"all1"}]
+    ["whassupman1",{"~isa":"INTERGRID/cellref","colletters":"whassupman","rowdigits":"1","colnr":126563337975660,"rownr":1,"cellkey":"whassupman1"}]
+    ]
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     try
@@ -533,17 +529,29 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.GRID.parse_rangekey 1" ] = ( T, done ) ->
+@[ "INTERGRID.GRID.parse_rangekey 2" ] = ( T, done ) ->
   probes_and_matchers = [
     [["a1","b2..a1"],null]
     [["c-5","b1..c12"],null]
     [["-c-5","b1..c12"],null]
-    [["d4","a1..b2"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a2","bottomright_key":"b2"}]
-    [["c-12","a1..b11"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a11","bottomright_key":"b11"}]
-    [["-c-12","a1..b11"],{"topleft_key":"a1","topright_key":"b1","bottomleft_key":"a11","bottomright_key":"b11"}]
-    [["d4","-a1..c3"],{"topleft_key":"c1","topright_key":"d1","bottomleft_key":"c3","bottomright_key":"d3"}]
-    [["d4","-a-1..c3"],{"topleft_key":"c3","topright_key":"d3","bottomleft_key":"c4","bottomright_key":"d4"}]
-    [["d4","-a-1..a1"],{"topleft_key":"a1","topright_key":"d1","bottomleft_key":"a4","bottomright_key":"d4"}]
+    [["d4","a1..b2"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":2,"top_rownr":1,"bottom_rownr":2}]
+    [["c-12","a1..b11"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":2,"top_rownr":1,"bottom_rownr":11}]
+    [["-c-12","a1..b11"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":2,"top_rownr":1,"bottom_rownr":11}]
+    [["d4","-a1..c3"],{"~isa:":"INTERGRID/rangeref","left_colnr":3,"right_colnr":4,"top_rownr":1,"bottom_rownr":3}]
+    [["d4","-a-1..c3"],{"~isa:":"INTERGRID/rangeref","left_colnr":3,"right_colnr":4,"top_rownr":3,"bottom_rownr":4}]
+    [["d4","-a-1..a1"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","*"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","*..*"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","*..**"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","**..**"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","**..*"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","a*..b*"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":2,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","b2..c3"],{"~isa:":"INTERGRID/rangeref","left_colnr":2,"right_colnr":3,"top_rownr":2,"bottom_rownr":3}]
+    [["d4","b2..c*"],{"~isa:":"INTERGRID/rangeref","left_colnr":2,"right_colnr":3,"top_rownr":1,"bottom_rownr":4}]
+    [["d4","*2..c*"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":1,"bottom_rownr":4}]
+    [["d5","*2..c3"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":2,"bottom_rownr":3}]
+    [["d5","*2..*3"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":4,"top_rownr":2,"bottom_rownr":3}]
+    [["e4","*2..c3"],{"~isa:":"INTERGRID/rangeref","left_colnr":1,"right_colnr":5,"top_rownr":2,"bottom_rownr":3}]
     ]
   #.........................................................................................................
   for [ [ grid_probe, rangekey_probe ], matcher, ] in probes_and_matchers
@@ -571,12 +579,12 @@ INTERGRID                 = require '../..'
   probes_and_matchers = [
     [["d4","d5"],null]
     [["d4","e4"],null]
-    [["d4","b1"],{"colletters":"b","rowdigits":"1","colnr":2,"rownr":1}]
-    [["d4","-b1"],{"colletters":"c","rowdigits":"1","colnr":3,"rownr":1}]
-    [["d4","a1"],{"colletters":"a","rowdigits":"1","colnr":1,"rownr":1}]
-    [["d4","c3"],{"colletters":"c","rowdigits":"3","colnr":3,"rownr":3}]
-    [["d4","-a1"],{"colletters":"d","rowdigits":"1","colnr":4,"rownr":1}]
-    [["d4","-a-1"],{"colletters":"d","rowdigits":"4","colnr":4,"rownr":4}]
+    [["d4","b1"],{"~isa":"INTERGRID/cellref","colletters":"b","rowdigits":"1","colnr":2,"rownr":1,"cellkey":"b1"}]
+    [["d4","-b1"],{"~isa":"INTERGRID/cellref","colletters":"c","rowdigits":"1","colnr":3,"rownr":1,"cellkey":"c1"}]
+    [["d4","a1"],{"~isa":"INTERGRID/cellref","colletters":"a","rowdigits":"1","colnr":1,"rownr":1,"cellkey":"a1"}]
+    [["d4","c3"],{"~isa":"INTERGRID/cellref","colletters":"c","rowdigits":"3","colnr":3,"rownr":3,"cellkey":"c3"}]
+    [["d4","-a1"],{"~isa":"INTERGRID/cellref","colletters":"d","rowdigits":"1","colnr":4,"rownr":1,"cellkey":"d1"}]
+    [["d4","-a-1"],{"~isa":"INTERGRID/cellref","colletters":"d","rowdigits":"4","colnr":4,"rownr":4,"cellkey":"d4"}]
     ]
   #.........................................................................................................
   for [ [ grid_probe, rangekey_probe ], matcher, ] in probes_and_matchers
@@ -615,8 +623,8 @@ unless module.parent?
     "INTERGRID.GRID.new_grid_from_cellkey 1"
     "INTERGRID.GRID.abs_cellref 1"
     "INTERGRID.GRID.abs_cellkey 1"
-    "INTERGRID.GRID.parse_rangekey 1"
     "INTERGRID.GRID.parse_cellkey 1"
+    "INTERGRID.GRID.parse_rangekey 2"
     ]
   @_prune()
   @_main()
