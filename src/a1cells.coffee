@@ -43,12 +43,12 @@ A1LETTERS                 = require './a1letters'
 
 #-----------------------------------------------------------------------------------------------------------
 @parse_cellkey = ( cellkey ) ->
-  R = cellkey.match @settings.patterns.a1_lowercase
+  match = cellkey.match @settings.patterns.a1_lowercase
   #.........................................................................................................
-  unless R?
+  unless match?
     throw new Error "µ9297 expected a cellkey like 'a1', '*', '*4' or 'c-1, got #{rpr cellkey}"
   #.........................................................................................................
-  R = R.groups
+  R = assign { '~isa': 'INTERGRID/cellref', },  match.groups
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
   #.........................................................................................................
   if R.colstar? and R.rowstar?
