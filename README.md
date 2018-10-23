@@ -183,7 +183,16 @@ identical to
 generalized `key`, which may contain stars and plus or minus signs and may be
 written as a cellkey or a rangekey, return an iterator over all the `cellref`s
 in the `grid`. Constructs like `'a1'`, `'b-1'`, `'c*'`, `'d2..e4'` and so on are
-all allowed as long as they stay within the boundaries of the grid.
+all allowed as long as they stay within the boundaries of the grid. Cells will
+be iterated over in no particular order.
+
+-------------------------
+
+**`INTERGRID.GRID.walk_cells_from_keys = ( grid, keys ) ->`** Given a `grid` and
+a list of `keys` (in the form of an array of keys or a text with comma-separated
+keys), return an iterator over all the `cellref`s in the `grid`. Also see
+`INTERGRID.GRID.walk_cells_from_key()`. Cells will be iterated over in no particular
+order.
 
 -------------------------
 

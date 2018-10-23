@@ -151,6 +151,19 @@ contains = ( text, pattern ) ->
 #===========================================================================================================
 # ITERATORS
 #-----------------------------------------------------------------------------------------------------------
+@walk_cells_from_keys = ( grid, keys ) ->
+  if CND.isa_text keys
+    yield from @walk_cells_from_keys grid, keys.split /\s*,\s*/g
+    yield return
+  seen_cellkeys = new Set()
+  for key in keys
+    for cell from @walk_cells_from_key grid, key
+      continue if seen_cellkeys.has cell.cellkey
+      seen_cellkeys.add cell.cellkey
+      yield cell
+  yield return
+
+#-----------------------------------------------------------------------------------------------------------
 @walk_cells_from_key = ( grid, key ) ->
   key = key + '..' + key unless contains key, /\.\./
   yield from @walk_cells_from_rangekey grid, key

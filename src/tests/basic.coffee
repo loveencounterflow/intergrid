@@ -647,6 +647,91 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   done()
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "INTERGRID.GRID.walk_cells_from_keys" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [["D5","D7"],null]
+    [["D5","E4"],null]
+    [["D5","B1"],["B1"]]
+    [["D5","-B1"],["C1"]]
+    [["D5","A1"],["A1"]]
+    [["D5","C3"],["C3"]]
+    [["D5","-A1"],["D1"]]
+    [["D5","-A-1"],["D5"]]
+    [["C3","C*"],["C1","C2","C3"]]
+    [["C3","*"],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3","*3"],["A3","B3","C3"]]
+    [["C3","*-1"],["A3","B3","C3"]]
+    [["D5","D7,A1"],null]
+    [["D5","E4..E5"],null]
+    [["D5","B1,B2,C3"],["B1","B2","C3"]]
+    [["D5","-B1..A1,D5"],["A1","B1","C1","D5"]]
+    [["D5","A1..A1"],["A1"]]
+    [["D5","A1,A1"],["A1"]]
+    [["D5","C3..A1"],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["D5","-A1..-A2"],["D1","D2"]]
+    [["D5","-A-1..-A-5"],["D1","D2","D3","D4","D5"]]
+    [["C3","B*..C*"],["B1","B2","B3","C1","C2","C3"]]
+    [["C3","*"],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3","**"],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3","*3,C*"],["A3","B3","C1","C2","C3"]]
+    [["C3","*-1,*1"],["A1","A3","B1","B3","C1","C3"]]
+    [["D5",["D7"]],null]
+    [["D5",["E4"]],null]
+    [["D5",["D7","A1"]],null]
+    [["D5",["E4..E5"]],null]
+    [["D5",["B1"]],["B1"]]
+    [["D5",["-B1"]],["C1"]]
+    [["D5",["A1"]],["A1"]]
+    [["D5",["C3"]],["C3"]]
+    [["D5",["-A1"]],["D1"]]
+    [["D5",["-A-1"]],["D5"]]
+    [["C3",["C*"]],["C1","C2","C3"]]
+    [["C3",["*"]],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3",["*3"]],["A3","B3","C3"]]
+    [["C3",["*-1"]],["A3","B3","C3"]]
+    [["D5",["B1","B2","C3"]],["B1","B2","C3"]]
+    [["D5",["-B1..A1","D5"]],["A1","B1","C1","D5"]]
+    [["D5",["A1..A1"]],["A1"]]
+    [["D5",["A1","A1"]],["A1"]]
+    [["D5",["C3..A1"]],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["D5",["-A1..-A2"]],["D1","D2"]]
+    [["D5",["-A-1..-A-5"]],["D1","D2","D3","D4","D5"]]
+    [["C3",["B*..C*"]],["B1","B2","B3","C1","C2","C3"]]
+    [["C3",["*"]],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3",["**"]],["A1","A2","A3","B1","B2","B3","C1","C2","C3"]]
+    [["C3",["*3","C*"]],["A3","B3","C1","C2","C3"]]
+    [["C3",["*-1","*1"]],["A1","A3","B1","B3","C1","C3"]]
+    ]
+  #.........................................................................................................
+  for [ [ grid_probe, key_probe ], matcher, ] in probes_and_matchers
+    grid    = INTERGRID.GRID.new_grid_from_cellkey grid_probe
+    result  = null
+    matcher = matcher.sort() if CND.isa_list matcher
+    try
+      result = [ ( INTERGRID.GRID.walk_cells_from_keys grid, key_probe )... ]
+    catch error
+      # debug '44455', jr [ [ grid_probe, key_probe ], matcher, ]
+      # debug '44455', error.message
+      # debug '44455', ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
+      # continue
+      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
+        # urge '76544-2', ( jr [ probe, null, ] )
+        T.ok true
+      else
+        # throw error
+        T.fail "#{rpr [ grid_probe, key_probe ]} failed with #{error.message}"
+      continue
+    hits    = ( x.cellkey for x in result when x[ '~isa' ] is 'INTERGRID/cellref' ).sort()
+    misses  = ( x.cellkey for x in result when x[ '~isa' ] isnt 'INTERGRID/cellref' )
+    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], hits, ] )
+    # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
+    T.eq misses.length, 0
+    T.eq hits, matcher
+  #.........................................................................................................
+  done()
+
 
 ############################################################################################################
 unless module.parent?
@@ -666,6 +751,7 @@ unless module.parent?
     "INTERGRID.GRID.parse_rangekey 2"
     "INTERGRID.GRID.walk_cells_from_key"
     "INTERGRID.CELLS cellref pattern"
+    "INTERGRID.GRID.walk_cells_from_keys"
     ]
   @_prune()
   @_main()
