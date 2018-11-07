@@ -95,37 +95,28 @@ jr                        = JSON.stringify
   colsign                                   = ''
   #.........................................................................................................
   if star?
-    unless star is '*'
-      throw new Error "µ5434 expected '*' for star, got #{rpr star}"
-    if colnr? or rownr?
-      throw new Error "µ8206 illegal to set colnr or rownr with star, got #{rpr cellref}"
+    throw new Error "µ5434 expected '*' for star, got #{rpr star}" unless star is '*'
+    throw new Error "µ8206 illegal to set colnr or rownr with star, got #{rpr cellref}" if colnr? or rownr?
     return '*'
   #.........................................................................................................
   if colstar?
-    unless colstar is '*'
-      throw new Error "µ6338 expected '*' for colstar, got #{rpr colstar}"
-    if colnr?
-      throw new Error "µ4974 illegal to set colnr with colstar, got #{rpr cellref}"
+    throw new Error "µ6338 expected '*' for colstar, got #{rpr colstar}" unless colstar is '*'
+    throw new Error "µ4974 illegal to set colnr with colstar, got #{rpr cellref}" if colnr?
     colletters = '*'
   #.........................................................................................................
   else if rowstar?
-    unless rowstar is '*'
-      throw new Error "µ2116 expected '*' for rowstar, got #{rpr rowstar}"
-    if rownr?
-      throw new Error "µ1071 illegal to set rownr with rowstar, got #{rpr cellref}"
+    throw new Error "µ2116 expected '*' for rowstar, got #{rpr rowstar}" unless rowstar is '*'
+    throw new Error "µ1071 illegal to set rownr with rowstar, got #{rpr cellref}" if rownr?
     rownr = '*'
   #.........................................................................................................
   else
-    #.......................................................................................................
     if colnr?
-      unless ( colnr = Math.floor colnr )
-        throw new Error "µ1849 expected integer for colnr, got #{rpr colnr}"
+      throw new Error "µ1849 expected integer for colnr, got #{rpr colnr}" unless ( colnr = Math.floor colnr )
     else
       colletters = '*'
     #.......................................................................................................
     if rownr?
-      unless ( rownr = Math.floor rownr )
-        throw new Error "µ9949 expected integer for rownr, got #{rpr rownr}"
+      throw new Error "µ9949 expected integer for rownr, got #{rpr rownr}" unless ( rownr = Math.floor rownr )
     else
       rownr = '*'
   #.........................................................................................................
