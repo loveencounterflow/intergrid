@@ -648,7 +648,7 @@ INTERGRID                 = require '../..'
   done()
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "INTERGRID.GRID.walk_cells_from_keys" ] = ( T, done ) ->
+@[ "INTERGRID.GRID.walk_cells_from_selector" ] = ( T, done ) ->
   probes_and_matchers = [
     [["D5","D7"],null]
     [["D5","E4"],null]
@@ -709,7 +709,7 @@ INTERGRID                 = require '../..'
     result  = null
     matcher = matcher.sort() if CND.isa_list matcher
     try
-      result = [ ( INTERGRID.GRID.walk_cells_from_keys grid, key_probe )... ]
+      result = [ ( INTERGRID.GRID.walk_cells_from_selector grid, key_probe )... ]
     catch error
       # debug '44455', jr [ [ grid_probe, key_probe ], matcher, ]
       # debug '44455', error.message
@@ -732,6 +732,39 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   done()
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "INTERGRID.GRID.rangekey_from_rangeref" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [["D5","A1..A1"],"A1..A1"]
+    [["D5","A1..-A-1"],"A1..D5"]
+    [["D5","C3..A1"],"A1..C3"]
+    [["D5","-A1..-A2"],"D1..D2"]
+    [["D5","-A-1..-A-5"],"D1..D5"]
+    ]
+  #.........................................................................................................
+  for [ [ grid_probe, key_probe ], matcher, ] in probes_and_matchers
+    grid    = INTERGRID.GRID.new_grid_from_cellkey grid_probe
+    try
+      rangeref  = INTERGRID.GRID.parse_rangekey grid, key_probe
+      result    = INTERGRID.GRID.rangekey_from_rangeref grid, rangeref
+    catch error
+      # debug '44455', jr [ [ grid_probe, key_probe ], matcher, ]
+      # debug '44455', error.message
+      # debug '44455', ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
+      # continue
+      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      if false # ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
+        # urge '76544-2', ( jr [ probe, null, ] )
+        T.ok true
+      else
+        # throw error
+        T.fail "#{rpr [ grid_probe, key_probe ]} failed with #{error.message}"
+      continue
+    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], result, ] )
+    # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
+  #.........................................................................................................
+  done()
+
 
 ############################################################################################################
 unless module.parent?
@@ -751,7 +784,8 @@ unless module.parent?
     "INTERGRID.GRID.parse_rangekey 2"
     "INTERGRID.GRID.walk_cells_from_key"
     "INTERGRID.CELLS cellref pattern"
-    "INTERGRID.GRID.walk_cells_from_keys"
+    "INTERGRID.GRID.walk_cells_from_selector"
+    "INTERGRID.GRID.rangekey_from_rangeref"
     ]
   @_prune()
   @_main()

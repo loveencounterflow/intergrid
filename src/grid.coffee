@@ -151,12 +151,12 @@ contains = ( text, pattern ) ->
 #===========================================================================================================
 # ITERATORS
 #-----------------------------------------------------------------------------------------------------------
-@walk_cells_from_keys = ( grid, keys ) ->
-  if CND.isa_text keys
-    yield from @walk_cells_from_keys grid, keys.split /\s*,\s*/g
+@walk_cells_from_selector = ( grid, selector ) ->
+  if CND.isa_text selector
+    yield from @walk_cells_from_selector grid, selector.split /\s*,\s*/g
     yield return
   seen_cellkeys = new Set()
-  for key in keys
+  for key in selector
     for cell from @walk_cells_from_key grid, key
       continue if seen_cellkeys.has cell.cellkey
       seen_cellkeys.add cell.cellkey
@@ -182,6 +182,13 @@ contains = ( text, pattern ) ->
       # cellkey = CELLS.get_cellkey { colnr, rownr, }
       yield CELLS.normalize_cellref { colnr, rownr, }
   yield return
+
+#-----------------------------------------------------------------------------------------------------------
+@rangekey_from_rangeref = ( grid, rangeref ) ->
+  ### TAINT should complain on rangeref out of grid bounds ###
+  topleft     = CELLS.get_cellkey { colnr: rangeref.left_colnr,  rownr: rangeref.top_rownr,     }
+  bottomright = CELLS.get_cellkey { colnr: rangeref.right_colnr, rownr: rangeref.bottom_rownr,  }
+  return "#{topleft}..#{bottomright}"
 
 #-----------------------------------------------------------------------------------------------------------
 @walk_colletters_and_colnrs = ( grid ) ->
