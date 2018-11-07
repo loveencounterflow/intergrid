@@ -91,17 +91,12 @@ edge_by_idxs =
     target = edgevector_by_styles[ style ] ?= [ 0, 0, 0, 0, ]
     target[ idx_by_edges[ edge ] ] = 1
   if ( Object.keys edgevector_by_styles ).length is 0
-    # echo ( CND.white [ 0, 0, 0, 0, ] ), ( CND.blue 0 ), ( CND.red 'no edges'        ), ( CND.grey fieldnr )
-    # mode = 'no-borders'
-    # yield { fieldnr, style, mode, }
     yield return
   for style, edgevector of edgevector_by_styles
     #.......................................................................................................
     switch count = edgevector.reduce ( ( n, r ) -> n + r ), 0
       #.....................................................................................................
       when 0
-        # mode  = 'no-borders'
-        # yield { fieldnr, style, mode, }
         null
       #.....................................................................................................
       when 1
@@ -112,7 +107,7 @@ edge_by_idxs =
       when 3
         mode    = 'connect'
         gap_idx = edgevector.indexOf 0
-        edges   = [ edge_by_idxs[ ( gap_idx + delta ) %% 4 ] for delta in [ 1 .. 3 ] ]
+        edges   = ( edge_by_idxs[ ( gap_idx + delta ) %% 4 ] for delta in [ 1 .. 3 ] )
         yield { fieldnr, style, mode, edges, }
       #.....................................................................................................
       when 4
