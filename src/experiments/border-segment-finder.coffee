@@ -128,9 +128,7 @@ edge_by_idxs =
             break
         if connected_at?
           mode        = 'connect'
-          border_idx  = edgevector.indexOf 1
-          border_idx  = edgevector.indexOf 1, 1 if border_idx is 0
-          edges       = [ edge_by_idxs[ border_idx ], edge_by_idxs[ ( border_idx + 1 ) %% 4 ], ]
+          edges       = [ edge_by_idxs[ connected_at ], edge_by_idxs[ ( connected_at + 1 ) %% 4 ], ]
           yield { fieldnr, style, mode, edges, }
         else
           mode        = 'single'
