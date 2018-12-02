@@ -1,6 +1,6 @@
 {
   "name": "intergrid",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Convert spreadsheet coordinates like A1, d3:e4, AA31..AB33 to equivalent notations (r1c1, R1C1, d3..e4, {col:1,row:1}...)  and vice versa",
   "main": "lib/main.js",
   "scripts": {
