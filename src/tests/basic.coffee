@@ -1,30 +1,20 @@
 
-
-
-
-
 'use strict'
 
 
 ############################################################################################################
-CND                       = require 'cnd'
-rpr                       = CND.rpr
-badge                     = 'INTERGRID/TESTS'
-log                       = CND.get_logger 'plain',     badge
-info                      = CND.get_logger 'info',      badge
-whisper                   = CND.get_logger 'whisper',   badge
-alert                     = CND.get_logger 'alert',     badge
-debug                     = CND.get_logger 'debug',     badge
-warn                      = CND.get_logger 'warn',      badge
-help                      = CND.get_logger 'help',      badge
-urge                      = CND.get_logger 'urge',      badge
-echo                      = CND.echo.bind CND
+GUY                       = require 'guy'
+{ debug
+  info
+  warn
+  urge
+  help }                  = GUY.trm.get_loggers 'INTERGRID/TESTS/basic'
+{ rpr }                   = GUY.trm
 #...........................................................................................................
 test                      = require 'guy-test'
-eq                        = CND.equals
-jr                        = JSON.stringify
-#...........................................................................................................
 INTERGRID                 = require '../..'
+types                     = require '../types'
+
 
 #-----------------------------------------------------------------------------------------------------------
 @_prune = ->
@@ -63,7 +53,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     result = INTERGRID.LETTERS.get_letters probe, ['X','Y','Z']
-    # urge '36633', ( jr [ probe, result, ] )
+    # urge '36633', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -94,7 +84,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     result = INTERGRID.LETTERS.get_letters probe
-    # urge '36633', ( jr [ probe, result, ] )
+    # urge '36633', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -125,7 +115,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     result = INTERGRID.LETTERS.get_number probe, ['X','Y','Z']
-    # urge '36633', ( jr [ probe, result, ] )
+    # urge '36633', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -156,7 +146,7 @@ INTERGRID                 = require '../..'
   #.........................................................................................................
   for [ probe, matcher, ] in probes_and_matchers
     result = INTERGRID.LETTERS.get_number probe
-    # urge '36633', ( jr [ probe, result, ] )
+    # urge '36633', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -190,7 +180,7 @@ INTERGRID                 = require '../..'
     if result?
       result = result.groups
       ( delete result[ key ] if result[ key ] in [ '', undefined, ] ) for key of result
-    # urge '77811', ( jr [ probe, result, ] )
+    # urge '77811', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -234,12 +224,12 @@ INTERGRID                 = require '../..'
       result = INTERGRID.CELLS.parse_cellkey probe
     catch error
       if ( matcher is null ) and ( error.message.match /expected a cellkey like 'A1', '\*', '\*4' or 'C-1, got '/ )?
-        # urge '77812', ( jr [ probe, null, ] )
+        # urge '77812', ( rpr [ probe, null, ] )
         T.ok true
       else
         T.fail error.message
       continue
-    # urge '77812', ( jr [ probe, result, ] )
+    # urge '77812', ( rpr [ probe, result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -276,7 +266,7 @@ INTERGRID                 = require '../..'
     catch error
       T.fail error.message
       continue
-    # urge '77811', ( jr [ probe, result, ] )
+    # urge '77811', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -369,7 +359,7 @@ INTERGRID                 = require '../..'
     catch error
       T.fail error.message
       continue
-    # urge '77811', ( jr [ probe, result_1, ] )
+    # urge '77811', ( rpr [ probe, result_1, ] )
     T.eq result_1, matcher
     result_2 = INTERGRID.CELLS.normalize_cellkey probe
     T.eq result_2, matcher
@@ -438,9 +428,9 @@ INTERGRID                 = require '../..'
     try
       result = INTERGRID.CELLS.get_cellkey probe
     catch error
-      T.fail "probe #{jr probe}: #{error.message}"
+      T.fail "probe #{rpr probe}: #{error.message}"
       continue
-    # urge '77811', ( jr [ probe, result, ] )
+    # urge '77811', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -459,12 +449,12 @@ INTERGRID                 = require '../..'
       result = INTERGRID.GRID.new_grid_from_cellkey probe
     catch error
       if ( matcher is null ) and ( error.message.match /expected a cellkey like 'A1', '\*', '\*4' or 'C-1, got '/ )?
-        # urge '77812', ( jr [ probe, null, ] )
+        # urge '77812', ( rpr [ probe, null, ] )
         T.ok true
       else
         T.fail error.message
       continue
-    urge '77812', ( jr [ probe, result, ] )
+    urge '77812', ( rpr [ probe, result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     # T.eq result, matcher
   #.........................................................................................................
@@ -484,12 +474,12 @@ INTERGRID                 = require '../..'
 #       result = INTERGRID.GRID.new_grid_from_cellkey probe
 #     catch error
 #       if ( matcher is null ) and ( error.message.match /expected a cellkey like 'a1', '\*', '\*4' or 'c-1, got '/ )?
-#         # urge '77812', ( jr [ probe, null, ] )
+#         # urge '77812', ( rpr [ probe, null, ] )
 #         T.ok true
 #       else
 #         T.fail error.message
 #       continue
-#     urge '77812', ( jr [ probe, result, ] )
+#     urge '77812', ( rpr [ probe, result, ] )
 #     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
 #     # T.eq result, matcher
 #   #.........................................................................................................
@@ -516,13 +506,13 @@ INTERGRID                 = require '../..'
       result = INTERGRID.GRID.abs_cellkey grid, cellkey_probe
     catch error
       if ( matcher is null ) and ( error.message.match /row nr [0-9]+ exceeds grid height [0-9]+/ )?
-        # urge '77812', ( jr [ probe, null, ] )
-        urge '77812', ( jr [ [ grid_probe, cellkey_probe, ], result, ] )
+        # urge '77812', ( rpr [ probe, null, ] )
+        urge '77812', ( rpr [ [ grid_probe, cellkey_probe, ], result, ] )
         T.ok true
       else
         T.fail error.message
       continue
-    urge '77812', ( jr [ [ grid_probe, cellkey_probe, ], result, ] )
+    urge '77812', ( rpr [ [ grid_probe, cellkey_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -560,15 +550,15 @@ INTERGRID                 = require '../..'
     try
       result = INTERGRID.GRID.parse_rangekey grid, rangekey_probe
     catch error
-      urge '50901-1', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+      urge '50901-1', ( rpr [ [ grid_probe, rangekey_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '50901-2', ( jr [ probe, null, ] )
+        # urge '50901-2', ( rpr [ probe, null, ] )
         T.ok true
       else
         # throw error
         T.fail "#{rpr [ grid_probe, rangekey_probe ]} failed with #{error.message}"
       continue
-    urge '50901-3', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+    urge '50901-3', ( rpr [ [ grid_probe, rangekey_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -593,15 +583,15 @@ INTERGRID                 = require '../..'
     try
       result = INTERGRID.GRID.parse_cellkey grid, rangekey_probe
     catch error
-      urge '76544-1', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+      urge '76544-1', ( rpr [ [ grid_probe, rangekey_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '76544-2', ( jr [ probe, null, ] )
+        # urge '76544-2', ( rpr [ probe, null, ] )
         T.ok true
       else
         # throw error
         T.fail "#{rpr [ grid_probe, rangekey_probe ]} failed with #{error.message}"
       continue
-    urge '76544-3', ( jr [ [ grid_probe, rangekey_probe, ], result, ] )
+    urge '76544-3', ( rpr [ [ grid_probe, rangekey_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq result, matcher
   #.........................................................................................................
@@ -630,9 +620,9 @@ INTERGRID                 = require '../..'
     try
       result = [ ( INTERGRID.GRID.walk_cells_from_key grid, key_probe )... ]
     catch error
-      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      urge '76544-1', ( rpr [ [ grid_probe, key_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '76544-2', ( jr [ probe, null, ] )
+        # urge '76544-2', ( rpr [ probe, null, ] )
         T.ok true
       else
         # throw error
@@ -640,7 +630,7 @@ INTERGRID                 = require '../..'
       continue
     hits    = ( x.cellkey for x in result when x[ '~isa' ] is 'INTERGRID/cellref' )
     fails   = ( x.cellkey for x in result when x[ '~isa' ] isnt 'INTERGRID/cellref' )
-    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], hits, ] )
+    urge '76544-3', ( rpr [ [ grid_probe, key_probe, ], hits, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq fails.length, 0
     T.eq hits, matcher
@@ -707,17 +697,17 @@ INTERGRID                 = require '../..'
   for [ [ grid_probe, key_probe ], matcher, ] in probes_and_matchers
     grid    = INTERGRID.GRID.new_grid_from_cellkey grid_probe
     result  = null
-    matcher = matcher.sort() if CND.isa_list matcher
+    matcher = matcher.sort() if types.isa.list matcher
     try
       result = [ ( INTERGRID.GRID.walk_cells_from_selector grid, key_probe )... ]
     catch error
-      # debug '44455', jr [ [ grid_probe, key_probe ], matcher, ]
+      # debug '44455', rpr [ [ grid_probe, key_probe ], matcher, ]
       # debug '44455', error.message
       # debug '44455', ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
       # continue
-      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      urge '76544-1', ( rpr [ [ grid_probe, key_probe, ], result, ] )
       if ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '76544-2', ( jr [ probe, null, ] )
+        # urge '76544-2', ( rpr [ probe, null, ] )
         T.ok true
       else
         # throw error
@@ -725,7 +715,7 @@ INTERGRID                 = require '../..'
       continue
     hits    = ( x.cellkey for x in result when x[ '~isa' ] is 'INTERGRID/cellref' ).sort()
     misses  = ( x.cellkey for x in result when x[ '~isa' ] isnt 'INTERGRID/cellref' )
-    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], hits, ] )
+    urge '76544-3', ( rpr [ [ grid_probe, key_probe, ], hits, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
     T.eq misses.length, 0
     T.eq hits, matcher
@@ -748,19 +738,19 @@ INTERGRID                 = require '../..'
       rangeref  = INTERGRID.GRID.parse_rangekey grid, key_probe
       result    = INTERGRID.GRID.rangekey_from_rangeref grid, rangeref
     catch error
-      # debug '44455', jr [ [ grid_probe, key_probe ], matcher, ]
+      # debug '44455', rpr [ [ grid_probe, key_probe ], matcher, ]
       # debug '44455', error.message
       # debug '44455', ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
       # continue
-      urge '76544-1', ( jr [ [ grid_probe, key_probe, ], result, ] )
+      urge '76544-1', ( rpr [ [ grid_probe, key_probe, ], result, ] )
       if false # ( matcher is null ) and ( error.message.match /(column|row) nr [0-9]+ exceeds grid (width|height) [0-9]+/ )?
-        # urge '76544-2', ( jr [ probe, null, ] )
+        # urge '76544-2', ( rpr [ probe, null, ] )
         T.ok true
       else
         # throw error
         T.fail "#{rpr [ grid_probe, key_probe ]} failed with #{error.message}"
       continue
-    urge '76544-3', ( jr [ [ grid_probe, key_probe, ], result, ] )
+    urge '76544-3', ( rpr [ [ grid_probe, key_probe, ], result, ] )
     # echo "| `#{rpr probe}` | `#{ ( rpr result ).replace /\n/g, ' ' }` |"
   #.........................................................................................................
   done()

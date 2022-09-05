@@ -2,23 +2,7 @@
 'use strict'
 
 ############################################################################################################
-CND                       = require 'cnd'
-rpr                       = CND.rpr
-badge                     = 'INTERGRID/A1CELLS'
-log                       = CND.get_logger 'plain',     badge
-info                      = CND.get_logger 'info',      badge
-whisper                   = CND.get_logger 'whisper',   badge
-alert                     = CND.get_logger 'alert',     badge
-debug                     = CND.get_logger 'debug',     badge
-warn                      = CND.get_logger 'warn',      badge
-help                      = CND.get_logger 'help',      badge
-urge                      = CND.get_logger 'urge',      badge
-echo                      = CND.echo.bind CND
-#...........................................................................................................
-assign                    = Object.assign
-new_xregex                = require 'xregexp'
 A1LETTERS                 = require './a1letters'
-jr                        = JSON.stringify
 
 #-----------------------------------------------------------------------------------------------------------
 @settings =
@@ -63,7 +47,7 @@ jr                        = JSON.stringify
   unless match?
     throw new Error "µ9297 expected a cellkey, got #{rpr cellkey}"
   #.........................................................................................................
-  R = assign { '~isa': 'INTERGRID/cellref', },  match.groups
+  R = { '~isa': 'INTERGRID/cellref', match.groups..., }
   ( delete R[ key ] if R[ key ] in [ '', '+', undefined, ] ) for key of R
   #.........................................................................................................
   if R.colstar? and R.rowstar?
@@ -137,7 +121,7 @@ jr                        = JSON.stringify
 
 #-----------------------------------------------------------------------------------------------------------
 @abs_cellref = ( cellref ) ->
-  R = assign {}, cellref
+  R = { cellref..., }
   delete R.colsign
   delete R.rowsign
   R.colnr   = Math.abs R.colnr if R.colnr?

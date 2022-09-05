@@ -17,7 +17,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "cnd": "^4.3.1",
+    "guy": "^11.8.0",
+    "intertype": "^10.1.0",
     "xregexp": "^4.2.0"
   },
   "devDependencies": {

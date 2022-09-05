@@ -2,29 +2,23 @@
 'use strict'
 
 ############################################################################################################
-CND                       = require 'cnd'
-rpr                       = CND.rpr
-badge                     = 'INTERGRID/GRID'
-log                       = CND.get_logger 'plain',     badge
-info                      = CND.get_logger 'info',      badge
-whisper                   = CND.get_logger 'whisper',   badge
-alert                     = CND.get_logger 'alert',     badge
-debug                     = CND.get_logger 'debug',     badge
-warn                      = CND.get_logger 'warn',      badge
-help                      = CND.get_logger 'help',      badge
-urge                      = CND.get_logger 'urge',      badge
-echo                      = CND.echo.bind CND
+GUY                       = require 'guy'
+# { debug
+#   info
+#   warn
+#   urge
+#   help }                  = GUY.trm.get_loggers 'INTERGRID/GRID'
+{ rpr }                   = GUY.trm
 #...........................................................................................................
-jr                        = JSON.stringify
-assign                    = Object.assign
-new_xregex                = require 'xregexp'
 LETTERS                   = require './a1letters'
 CELLS                     = require './a1cells'
+types                     = require './types'
+
 
 #-----------------------------------------------------------------------------------------------------------
 contains = ( text, pattern ) ->
   ### TAINT move to helper library, CND, ... ###
-  switch CND.type_of pattern
+  switch types.type_of pattern
     when 'regex' then return ( text.match pattern )?
     else throw new Error "pattern not supported: #{rpr pattern}"
   return null
@@ -152,7 +146,7 @@ contains = ( text, pattern ) ->
 # ITERATORS
 #-----------------------------------------------------------------------------------------------------------
 @walk_cells_from_selector = ( grid, selector ) ->
-  if CND.isa_text selector
+  if types.isa.text selector
     yield from @walk_cells_from_selector grid, selector.split /\s*,\s*/g
     yield return
   seen_cellkeys = new Set()

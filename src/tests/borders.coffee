@@ -1,41 +1,20 @@
 
-
-
-
-
 'use strict'
 
 
 ############################################################################################################
-CND                       = require 'cnd'
-rpr                       = CND.rpr
-badge                     = 'INTERGRID/TESTS'
-log                       = CND.get_logger 'plain',     badge
-info                      = CND.get_logger 'info',      badge
-whisper                   = CND.get_logger 'whisper',   badge
-alert                     = CND.get_logger 'alert',     badge
-debug                     = CND.get_logger 'debug',     badge
-warn                      = CND.get_logger 'warn',      badge
-help                      = CND.get_logger 'help',      badge
-urge                      = CND.get_logger 'urge',      badge
-echo                      = CND.echo.bind CND
+GUY                       = require 'guy'
+{ debug
+  info
+  warn
+  urge
+  help }                  = GUY.trm.get_loggers 'INTERGRID/TESTS/borders'
+{ rpr }                   = GUY.trm
 #...........................................................................................................
 test                      = require 'guy-test'
-eq                        = CND.equals
-jr                        = JSON.stringify
-#...........................................................................................................
 _INTERIM_BORDERS          = require '../experiments/border-segment-finder'
+types                     = require '../types'
 
-#-----------------------------------------------------------------------------------------------------------
-@_prune = ->
-  for name, value of @
-    continue if name.startsWith '_'
-    delete @[ name ] unless name in include
-  return null
-
-#-----------------------------------------------------------------------------------------------------------
-@_main = ->
-  test @, 'timeout': 30000
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "INTERIM_BORDERS.walk_segments 1" ] = ( T, done ) ->
@@ -72,8 +51,8 @@ _INTERIM_BORDERS          = require '../experiments/border-segment-finder'
   for [ probe, selector, matcher, ], fieldidx in probes_and_matchers
     result = [ ( _INTERIM_BORDERS.walk_segments fieldidx + 1, probe )... ]
     result = ( x[ selector ] for x in result )
-    result = [] if CND.equals result, [ undefined, ]
-    urge '36633', ( jr [ probe, selector, result, ] )
+    result = [] if types.equals result, [ undefined, ]
+    urge '36633', ( rpr [ probe, selector, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -86,8 +65,8 @@ _INTERIM_BORDERS          = require '../experiments/border-segment-finder'
   #.........................................................................................................
   for [ probe, matcher, ], fieldidx in probes_and_matchers
     result = [ ( _INTERIM_BORDERS.walk_segments fieldidx + 1, probe )... ]
-    # result = [] if CND.equals result, [ undefined, ]
-    urge '36633', ( jr [ probe, result, ] )
+    # result = [] if types.equals result, [ undefined, ]
+    urge '36633', ( rpr [ probe, result, ] )
     T.eq result, matcher
   #.........................................................................................................
   done()
@@ -104,8 +83,8 @@ _INTERIM_BORDERS          = require '../experiments/border-segment-finder'
   for [ probe, matcher, ], fieldidx in probes_and_matchers
     # whisper '----------------------------------'
     result = [ ( _INTERIM_BORDERS.walk_segments fieldidx + 1, probe )... ]
-    # result = [] if CND.equals result, [ undefined, ]
-    urge '36633', ( jr [ probe, result, ] )
+    # result = [] if types.equals result, [ undefined, ]
+    urge '36633', ( rpr [ probe, result, ] )
     # debug '29222', 'probe:  ', ( Object.keys probe ).sort()
     # debug '29222', 'result: ', ( result[ 0 ].edges ).sort()
     T.eq result, matcher
@@ -116,16 +95,7 @@ _INTERIM_BORDERS          = require '../experiments/border-segment-finder'
 
 ############################################################################################################
 unless module.parent?
-  include = [
-    "INTERIM_BORDERS.walk_segments 1"
-    "INTERIM_BORDERS.walk_segments 2"
-    "INTERIM_BORDERS.walk_segments 3"
-    ]
-  @_prune()
-  @_main()
-
-
-
+  test @
 
 
 
